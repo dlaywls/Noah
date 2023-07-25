@@ -1,13 +1,20 @@
 package com.example.noah.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+class HomeViewModel{
 
-class HomeViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
+    /*private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
     }
-    val text: LiveData<String> = _text
+    val text: LiveData<String> = _text*/
+    var id: String?=" "
+    var title:String=""
+    var contents:String=""
+    constructor(){}
+
+    constructor(id: String?, title: String, contents: String){
+        this.id = id
+        this.title = title
+        this.contents = contents
+    }
+
 }
