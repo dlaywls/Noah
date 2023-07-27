@@ -66,6 +66,7 @@
 
             <!-- On/Off 스위치 속성값 : Green -->
             <Switch
+                android:id="@+id/notificationSwitch"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -73,6 +74,7 @@
                 android:thumbTint="@color/green"
                 android:trackTint="@color/green"
             />
+
 
         </LinearLayout>
 
