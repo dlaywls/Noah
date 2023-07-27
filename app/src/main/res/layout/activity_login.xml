@@ -8,7 +8,9 @@
     android:orientation="vertical"
     tools:context=".login">
 
+
     <!-- Logo 레이아웃 : yellow -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,7 +29,9 @@
 
     </LinearLayout>
 
+
     <!-- Login 레이아웃 : white -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -35,6 +39,7 @@
         android:gravity="center_vertical"
         android:orientation="vertical">
 
+        <!-- 소셜로그인 txt -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,6 +48,7 @@
             android:text="------------   소셜로그인   ------------\n"
             />
 
+        <!-- 카카오 로그인 img -->
         <ImageView
         android:id="@+id/login"
         android:layout_width="match_parent"
@@ -53,7 +59,9 @@
 
 </LinearLayout>
 
+
     <!-- bottom bar : yellow -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
