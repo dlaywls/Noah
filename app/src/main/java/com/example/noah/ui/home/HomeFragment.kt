@@ -3,14 +3,12 @@ package com.example.noah.ui.home
 import android.annotation.SuppressLint
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,7 +48,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             //글쓰기 화면으로 전환
             findNavController().navigate(R.id.navigation_boardWrite)
         }
-
+        val whatToDoButton = view.findViewById<Button>(R.id.home_button_action)
+        whatToDoButton.setOnClickListener {
+            //조치사항 화면으로 전환
+            findNavController().navigate(R.id.navigation_whatToDo)
+        }
+        val myButton = view.findViewById<Button>(R.id.main_My_button)
+        myButton.setOnClickListener {
+            //내 정보 화면으로 전환
+            findNavController().navigate(R.id.navigation_my_profile)
+        }
 
 
         val dbManager = DBManager(requireContext())
@@ -63,26 +70,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val cursor:Cursor
         cursor=sqlitedDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
-            var id = cursor.getInt(cursor.getColumnIndex("id"))
-            var title = cursor.getString(cursor.getColumnIndex("title")).toString()
-            var contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
+            val id=cursor.getInt(cursor.getColumnIndex("id"))
+            val title = cursor.getString(cursor.getColumnIndex("title")).toString()
+            val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
             dataList.add(HomeViewModel(id,title, contents))
             Log.d("dataList", dataList.toString())
         }
-        //여기까지 잘 됨
 
         cursor.close()
         sqlitedDB.close()
         dbManager.close()
 
 
-        val adapter = MainAdapter(dataList)
+        val adapter = BoardAdapter(dataList)
         adapter.notifyDataSetChanged()
 
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
     }
+
 
 
 }
