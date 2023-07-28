@@ -50,7 +50,7 @@
 
         <!-- 카카오 로그인 img -->
         <ImageView
-        android:id="@+id/login"
+        android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/kakao_login"
