@@ -3,7 +3,6 @@ package com.example.noah.ui.home
 import android.annotation.SuppressLint
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -63,7 +62,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val cursor:Cursor
         cursor=sqlitedDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
-            var id = cursor.getInt(cursor.getColumnIndex("id"))
+          
+            var id=cursor.getInt(cursor.getColumnIndex("id"))
+            
             var title = cursor.getString(cursor.getColumnIndex("title")).toString()
             var contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
             dataList.add(HomeViewModel(id,title, contents))
