@@ -6,25 +6,7 @@
     android:orientation="vertical"
     tools:context=".MyProfile">
 
-    <!-- 상단바 구현 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/yellow"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="30dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:text="조치 사항"
-            />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +43,8 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1">
+            android:background="@drawable/rounded_box_gray1"
+            android:onClick="onClickEarthquake">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -84,7 +67,8 @@
             android:gravity="center_vertical"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1">
+            android:background="@drawable/rounded_box_gray1"
+            android:onClick="@{()->whatTodo.onClickEmergency()}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +90,8 @@
             android:gravity="center_vertical"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1">
+            android:background="@drawable/rounded_box_gray1"
+            android:onClick="@{()->whatTodo.onClickArticle()}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,7 +112,8 @@
             android:gravity="center_vertical"
             android:layout_marginTop="10dp"
             android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1">
+            android:background="@drawable/rounded_box_gray1"
+            android:onClick="onClickPortalSite">
 
             <TextView
                 android:layout_width="wrap_content"
