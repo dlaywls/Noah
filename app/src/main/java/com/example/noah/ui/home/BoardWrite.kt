@@ -3,9 +3,6 @@ package com.example.noah.ui.home
 
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,13 +21,9 @@ class BoardWrite() : Fragment() {
     lateinit var registButton: Button
     lateinit var sqlitedb:SQLiteDatabase
 
-    private lateinit var dataList: List<HomeViewModel>
 
-    var insertedId:Long = 0
 
-    constructor(parcel: Parcel) : this() {
-        insertedId = parcel.readLong()
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,22 +61,5 @@ class BoardWrite() : Fragment() {
         return view
     }
 
-    /*override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(insertedId)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<BoardWrite> {
-        override fun createFromParcel(parcel: Parcel): BoardWrite {
-            return BoardWrite(parcel)
-        }
-
-        override fun newArray(size: Int): Array<BoardWrite?> {
-            return arrayOfNulls(size)
-        }
-    }*/
 
 }
