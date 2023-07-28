@@ -4,9 +4,11 @@
 
     <!-- 카카오톡 API를 사용하기 위한 퍼미션 추가 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:name=".KakaoApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -29,7 +31,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="Noah">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,6 +55,6 @@
         </activity> <!-- 카카오톡 API를 사용하기 위한 메타데이터 설정 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/kakao_app_key" />
+            android:value="349bfd72de9758c2ea3eca3d73454c59" />
     </application>
 </manifest>
