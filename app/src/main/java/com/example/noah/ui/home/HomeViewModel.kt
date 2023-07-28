@@ -2,11 +2,5 @@ package com.example.noah.ui.home
 
 
 
-class HomeViewModel(){
+data class HomeViewModel(val id:Int, val title:String, val contents:String)
 
-    var id: Int?=0
-    var title:String=""
-    var contents:String=""
-
-    constructor(id:Int?,title:String,contents:String) : this()
-}
