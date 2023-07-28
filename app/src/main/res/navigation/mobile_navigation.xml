@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_board_write" />
     <fragment
         android:id="@+id/navigation_whatToDo"
-        android:name="com.example.noah.ui.home.whatTodo"
+        android:name="com.example.noah.ui.home.WhatToDo"
         android:label="@string/title_what_to_do"
         tools:layout="@layout/fragment_what_to_do" />
     <activity
