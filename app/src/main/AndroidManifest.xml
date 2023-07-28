@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <!-- 카카오톡 API를 사용하기 위한 퍼미션 추가 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!--  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>-->
@@ -26,6 +27,20 @@
         <activity
             android:name=".login"
             android:exported="false" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data android:host="oauth"
+                    android:scheme="kakao47939324fbf96f947b79074c122ed360" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
