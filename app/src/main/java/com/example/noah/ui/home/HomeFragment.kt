@@ -44,11 +44,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         //setContentView(R.layout.activity_main)
 
-        val button = view.findViewById<Button>(R.id.main_write_button)
-        button.setOnClickListener {
+        val writeButton = view.findViewById<Button>(R.id.main_write_button)
+        writeButton.setOnClickListener {
             //글쓰기 화면으로 전환
             findNavController().navigate(R.id.navigation_boardWrite)
         }
+
 
 
         val dbManager = DBManager(requireContext())
@@ -61,7 +62,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val cursor:Cursor
         cursor=sqlitedDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
+          
             var id=cursor.getInt(cursor.getColumnIndex("id"))
+            
             var title = cursor.getString(cursor.getColumnIndex("title")).toString()
             var contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
             dataList.add(HomeViewModel(id,title, contents))
@@ -75,32 +78,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
         val adapter = MainAdapter(dataList)
+        adapter.notifyDataSetChanged()
+
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
     }
 
-    class MainAdapter(private val dataList: List<HomeViewModel>) : RecyclerView.Adapter<MainAdapter.MainViewHolder>() {
-
-        class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val titleTextView: TextView = itemView.findViewById(R.id.item_title_text)
-            val contentsTextView: TextView = itemView.findViewById(R.id.item_contents_text)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_main, parent, false)
-            return MainViewHolder(itemView)
-        }
-
-        override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
-            val data = dataList[position]
-            holder.titleTextView.text = data.title
-            holder.contentsTextView.text = data.contents
-        }
-
-        override fun getItemCount(): Int {
-            return dataList.size
-        }
-    }
 
 }

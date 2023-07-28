@@ -189,6 +189,7 @@
 
         <!-- 로그아웃  -->
         <LinearLayout
+            android:id="@+id/logoutButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
@@ -211,6 +212,7 @@
 
         <!-- 회원 탈퇴  -->
         <LinearLayout
+            android:id="@+id/deleteIdButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
