@@ -3,6 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="kakao_app_key">47939324fbf96f947b79074c122ed360</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
