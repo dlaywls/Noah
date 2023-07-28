@@ -22,4 +22,10 @@
         android:name="com.example.noah.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_boardWrite"
+        android:name="com.example.noah.ui.home.BoardWrite"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_board_write" />
+
 </navigation>
