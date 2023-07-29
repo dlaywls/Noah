@@ -7,26 +7,6 @@
     android:orientation="vertical"
     tools:context=".MyProfile">
 
-    <!-- 상단바 구현 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/yellow"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="30dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:text="내 정보"
-            />
-
-</LinearLayout>
-
     <!-- 알림설정 -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -168,6 +148,7 @@
 
         <!-- 주소지 변경 -->
         <LinearLayout
+            android:id="@+id/set_Address"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
