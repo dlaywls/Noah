@@ -1,9 +1,11 @@
 package com.example.noah
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Switch
@@ -60,6 +62,12 @@ class MyProfile : AppCompatActivity() {
                 // 예: 알림 기능을 비활성화하는 코드
             }
         }
+    }
+
+    // set_Address LinearLayout을 클릭했을 때 호출되는 메서드
+    fun onSetAddressClick(view: View) {
+        val intent = Intent(this, SetAddress::class.java)
+        startActivity(intent)
     }
 
     companion object {
