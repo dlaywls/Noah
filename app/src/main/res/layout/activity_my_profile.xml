@@ -148,6 +148,7 @@
 
         <!-- 주소지 변경 -->
         <LinearLayout
+            android:id="@+id/set_Address"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
