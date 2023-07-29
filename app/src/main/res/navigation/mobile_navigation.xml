@@ -38,4 +38,5 @@
         android:label="@string/title_my_profile"
         tools:layout="@layout/activity_my_profile" />
 
+
 </navigation>
