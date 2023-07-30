@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 
 
 
-class DBManager(
+class Borad_DBManager(
     context: Context
 ) : SQLiteOpenHelper(context, "board_DB", null, 1) {
     companion object {

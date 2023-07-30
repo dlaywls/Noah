@@ -9,8 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.example.noah.DBManager
+import com.example.noah.Borad_DBManager
 import com.example.noah.R
 
 
@@ -37,19 +38,20 @@ class BoardWrite() : Fragment() {
         registButton = view.findViewById(R.id.regist_button)
 
 
-        val dbManager = DBManager(requireContext())
+        val boradDbManager = Borad_DBManager(requireContext())
 
         registButton.setOnClickListener {
             val strTitle = writeTitleEdit.text.toString().trim()
             val strContents = writeContentsEdit.text.toString().trim()
 
-            sqlitedb=dbManager.writableDatabase
+            Toast.makeText(context, "등록", Toast.LENGTH_SHORT).show()
+            sqlitedb=boradDbManager.writableDatabase
             if (strTitle.isNotEmpty() && strContents.isNotEmpty()) {
                 // 데이터 삽입
                 sqlitedb.execSQL("INSERT INTO board(title,contents) VALUES('"+strTitle+"','"+strContents+"');")
 
             } else {
-                //입력 값 비어있을 경우 처리
+                Toast.makeText(context, "글을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
             sqlitedb.close()
 
