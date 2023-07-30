@@ -82,14 +82,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         dbManager.close()
 
 
-        val adapter = BoardAdapter(dataList)
+        val adapter = BoardAdapter(dataList){selectedItem->
+            //showCommentRecyclerView(selectedItem)
+            findNavController().navigate(R.id.navigation_comment)
+
+        }
         adapter.notifyDataSetChanged()
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         recyclerView.adapter = adapter
 
     }
-
 
 
 }

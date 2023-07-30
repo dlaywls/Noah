@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.noah.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_map"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
@@ -37,6 +37,11 @@
         android:name="com.example.noah.MyProfile"
         android:label="@string/title_my_profile"
         tools:layout="@layout/activity_my_profile" />
+    <fragment
+        android:id="@+id/navigation_comment"
+        android:name="com.example.noah.ui.home.Comment"
+        android:label="@string/title_community"
+        tools:layout="@layout/fragment_comment" />
 
 
 </navigation>
