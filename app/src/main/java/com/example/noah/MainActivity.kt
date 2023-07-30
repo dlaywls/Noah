@@ -1,14 +1,9 @@
 package com.example.noah
 
-<<<<<<< Updated upstream
-import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-=======
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
->>>>>>> Stashed changes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -25,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val SPLASH_DELAY: Long = 2000 // 로고를 보여줄 시간(2초)
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,10 +67,9 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
         navView.setupWithNavController(navController)
+
     }
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
+

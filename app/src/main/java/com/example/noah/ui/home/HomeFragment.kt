@@ -85,8 +85,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val adapter = BoardAdapter(dataList)
         adapter.notifyDataSetChanged()
 
+        recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
     }
 
