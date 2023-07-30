@@ -1,16 +1,24 @@
 package com.example.noah
 
+<<<<<<< Updated upstream
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
+=======
+import android.content.Intent
+import android.os.Build
+import android.os.Bundle
+import androidx.annotation.RequiresApi
+>>>>>>> Stashed changes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.noah.databinding.ActivityMainBinding
-import android.content.Intent
-import android.os.Handler
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.common.model.KakaoSdkError
+import com.kakao.sdk.user.UserApiClient
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,25 +27,38 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 2초 후에 로고를 보여주는 화면을 종료하고 메인 화면 또는 로그인 화면으로 이동
-        Handler().postDelayed({
+        // 토큰 있는지 확인
+        if (AuthApiClient.instance.hasToken()) {
+            // Validate the token
+            UserApiClient.instance.accessTokenInfo { _, error ->
+                if (error != null) {
 
-            // 예시로 로그인 상태를 false로 가정한 경우
-            val isLoggedIn = false
-
-            // 로그인 상태에 따라 메인 화면 또는 로그인 화면으로 이동
-            if (isLoggedIn) {
-                startActivity(Intent(this@MainActivity, "{메인액티비티}"::class.java))
-            } else {
-                startActivity(Intent(this@MainActivity, login::class.java))
+                    if (error is KakaoSdkError && error.isInvalidTokenError()) {
+                        // 토큰이 유효하지 않은 경우 -> 로그인 화면으로 이동
+                        val intent = Intent(this, login::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                    else {
+                        // 기타 에러 처리
+                    }
+                } else {
+                    // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨) -> 홈 화면으로 이동
+                    val intent = Intent(this, "{Home}"::class.java)
+                    startActivity(intent)
+                    finish()
+                }
             }
+        } else {
+            // 토큰이 없는 경우 -> 로그인 화면으로 이동
+            val intent = Intent(this, login::class.java)
+            startActivity(intent)
+            finish()
+        }
 
-            finish() // MainActivity를 종료하여 뒤로 가기 버튼을 눌렀을 때 로고 화면으로 돌아가지 않도록 함
-        }, SPLASH_DELAY)
 
         val navView: BottomNavigationView = binding.navView
 
@@ -52,4 +73,8 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
