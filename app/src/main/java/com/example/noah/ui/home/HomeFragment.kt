@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
-import com.example.noah.DBManager
+import com.example.noah.Borad_DBManager
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -22,7 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var recyclerView:RecyclerView
     lateinit var  myButton:Button
     lateinit var writeButton:Button
-    lateinit var sqlitedDB:SQLiteDatabase
+    lateinit var sqliteDB:SQLiteDatabase
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,15 +60,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-        val dbManager = DBManager(requireContext())
+        val boradDbManager = Borad_DBManager(requireContext())
 
 
 
         val dataList= mutableListOf<HomeViewModel>()
 
-        sqlitedDB=dbManager.readableDatabase
+        sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
-        cursor=sqlitedDB.rawQuery("SELECT * FROM board;",null)
+        cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
             val id=cursor.getInt(cursor.getColumnIndex("id"))
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
@@ -78,13 +78,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         cursor.close()
-        sqlitedDB.close()
-        dbManager.close()
+        sqliteDB.close()
+        boradDbManager.close()
 
 
         val adapter = BoardAdapter(dataList){selectedItem->
-            //showCommentRecyclerView(selectedItem)
-            findNavController().navigate(R.id.navigation_comment)
+
+            val bundle = Bundle()
+            bundle.putString("itemTitle", selectedItem.title)
+            bundle.putString("itemContents", selectedItem.contents)
+
+            findNavController().navigate(R.id.navigation_comment,bundle)
+
 
         }
         adapter.notifyDataSetChanged()
