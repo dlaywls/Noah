@@ -30,202 +30,352 @@
 
     </LinearLayout>
 
-    <!-- 회색 박스 -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
-        android:orientation="vertical"
-        android:animateLayoutChanges="true">
-
-        <!-- 지진 발생 시 -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/earthquake_layout"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray3"
-                android:textSize="15sp"
-                android:gravity="center_vertical|start"
-                android:text="지진 발생 시"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/img_more_earthquake"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_down"
-                android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <!--레이아웃 펼치기 했을 때 뜨는 레이아웃-->
+    <!-- 회색 박스 -->
         <LinearLayout
-            android:id="@+id/layout_expand1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray2"
+            android:paddingHorizontal="30dp"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:animateLayoutChanges="true">
 
-            <TextView
+            <!-- 지진 발생 시 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/earthquake_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/rounded_box_gray1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray3"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|start"
+                    android:text="지진 발생 시"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/img_more_earthquake"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_down"
+                    android:rotation="180"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--레이아웃 펼치기 했을 때 뜨는 레이아웃-->
+            <LinearLayout
+                android:id="@+id/layout_expand1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Sample Sample Sample Sample" />
-        </LinearLayout>
+                android:background="@color/gray2"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!--평소 대비-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_earthquake_title1"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_earthquake_contents1" />
+                <!--장소에 따라 대비-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_earthquake_title2"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_to_earthquake_contents2" />
+            </LinearLayout>
 
 
 
 
-        <!-- 비상사태 발생 시  -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/emergency_layout"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            <!-- 비상사태 발생 시  -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/emergency_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/rounded_box_gray1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray3"
-                android:textSize="15sp"
-                android:gravity="center_vertical|start"
-                android:text="비상사태 발생 시"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray3"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|start"
+                    android:text="비상사태 발생 시"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/img_more_emergency"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_down"
-                android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/img_more_emergency"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_down"
+                    android:rotation="180"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--레이아웃 펼치기 했을 때 뜨는 레이아웃-->
-        <LinearLayout
-            android:id="@+id/layout_expand2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray2"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--레이아웃 펼치기 했을 때 뜨는 레이아웃-->
+            <LinearLayout
+                android:id="@+id/layout_expand2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Sample Sample Sample Sample" />
-        </LinearLayout>
+                android:background="@color/gray2"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <!-- 대비 물품  -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/article_layout"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+                <!--비상시 정부 대응-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_emergency_title1"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_emergency_contents1" />
+
+                <!--비상시 행동요령-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_emergency_title2"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_emergency_contents2" />
+
+            </LinearLayout>
+
+            <!-- 대비 물품  -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/article_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/rounded_box_gray1"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray3"
-                android:textSize="15sp"
-                android:gravity="center_vertical|start"
-                android:text="대비 물품"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray3"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|start"
+                    android:text="대비 물품"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/img_more_article"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_down"
-                android:rotation="180"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageButton
+                    android:id="@+id/img_more_article"
+                    android:layout_width="?attr/actionBarSize"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_down"
+                    android:rotation="180"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <!--레이아웃 펼치기 했을 때 뜨는 레이아웃-->
-        <LinearLayout
-            android:id="@+id/layout_expand3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray2"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <TextView
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <!--레이아웃 펼치기 했을 때 뜨는 레이아웃-->
+            <LinearLayout
+                android:id="@+id/layout_expand3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Sample Sample Sample Sample" />
+                android:background="@color/gray2"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!--일상에서 대비할수록 안전-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_article_title1"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_article_contents1" />
+
+                <!--비상 대비 물자-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_article_title2"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_article_contents2" />
+
+                <!--비상대비 물자 준비 요령-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray2"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/what_to_do_article_title3"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_article_contents3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:background="@color/gray1"
+                    android:text="@string/what_to_do_article_contents2" />
+            </LinearLayout>
+
+            <!--국민 재난 안전 포털-->
+            <LinearLayout
+                android:id="@+id/portalSite_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/rounded_box_gray1"
+                android:onClick="onClickPortalSite">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray3"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|start"
+                    android:text="국민 재난 안전 포털"
+                    android:layout_weight="1" />
+
+
+            </LinearLayout>
+
         </LinearLayout>
-
-        <!--국민 재난 안전 포털-->
-        <LinearLayout
-            android:id="@+id/portalSite_layout"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="15dp"
-            android:background="@drawable/rounded_box_gray1"
-            android:onClick="onClickPortalSite">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray3"
-                android:textSize="15sp"
-                android:gravity="center_vertical|start"
-                android:text="국민 재난 안전 포털"
-                android:layout_weight="1" />
-
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>
