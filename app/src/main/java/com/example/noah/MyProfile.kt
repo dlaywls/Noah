@@ -34,10 +34,10 @@ class MyProfile : AppCompatActivity() {
             // 로그아웃
             UserApiClient.instance.logout { error ->
                 if (error != null) {
-                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                    Log.e("logout", "로그아웃 실패. SDK에서 토큰 삭제됨", error)
                 }
                 else {
-                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                    Log.i("logout", "로그아웃 성공. SDK에서 토큰 삭제됨")
                 }
             }
         }
@@ -47,10 +47,10 @@ class MyProfile : AppCompatActivity() {
             // 회원탈퇴
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
-                    Log.e(TAG, "연결 끊기 실패", error)
+                    Log.e("unlink", "회원 탈퇴 실패", error)
                 }
                 else {
-                    Log.i(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                    Log.i("unlink", "회원 탈퇴 성공. SDK에서 토큰 삭제 됨")
                 }
             }
 
