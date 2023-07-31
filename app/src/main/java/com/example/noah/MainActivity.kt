@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.noah.databinding.ActivityMainBinding
+import com.example.noah.ui.dashboard.DashboardFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
@@ -25,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
 
         // 토큰 있는지 확인
         if (AuthApiClient.instance.hasToken()) {
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨) -> 홈 화면으로 이동
-                    val intent = Intent(this, "{Home}"::class.java)
+                    val intent = Intent(this, DashboardFragment::class.java)
                     startActivity(intent)
                     finish()
                 }
