@@ -19,7 +19,6 @@ import com.kakao.sdk.user.UserApiClient
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val SPLASH_DELAY: Long = 2000 // 로고를 보여줄 시간(2초)
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +40,10 @@ class MainActivity : AppCompatActivity() {
                     }
                     else {
                         // 기타 에러 처리
+                            // 토큰이 유효하지 않은 경우 -> 로그인 화면으로 이동
+                            val intent = Intent(this, login::class.java)
+                            startActivity(intent)
+                            finish()
                     }
                 } else {
                     // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨) -> 홈 화면으로 이동
