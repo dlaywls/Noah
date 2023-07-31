@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         // 토큰 있는지 확인
         if (AuthApiClient.instance.hasToken()) {
             // Validate the token

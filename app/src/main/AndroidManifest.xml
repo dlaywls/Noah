@@ -36,7 +36,6 @@
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -57,11 +56,11 @@
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao47939324fbf96f947b79074c122ed360" />
+                    android:scheme="kakao349bfd72de9758c2ea3eca3d73454c59" />
             </intent-filter>
         </activity>
 
-        <!-- 카카오톡 API를 사용하기 위한 메타데이터 설정 -->
+        <!-- 카카오톡 API를 사용하기 위한 메타데이터 설정-->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="349bfd72de9758c2ea3eca3d73454c59" />
