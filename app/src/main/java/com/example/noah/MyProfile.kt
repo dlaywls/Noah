@@ -1,9 +1,12 @@
 package com.example.noah
 
+import android.app.NotificationManager
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Switch
@@ -14,6 +17,9 @@ class MyProfile : AppCompatActivity() {
     private lateinit var logoutButton: LinearLayout
     private lateinit var deleteIdButton: LinearLayout
     private lateinit var notificationSwitch: Switch
+    private lateinit var set_Address: LinearLayout
+    //val notificationManager = this.getSystemService(this.NOTIFICATION_SERVICE) as NotificationManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_profile)
@@ -21,6 +27,7 @@ class MyProfile : AppCompatActivity() {
         logoutButton = findViewById(R.id.logoutButton)
         deleteIdButton = findViewById(R.id.deleteIdButton)
         notificationSwitch = findViewById(R.id.notificationSwitch)
+        set_Address = findViewById(R.id.set_Address)
 
         logoutButton.setOnClickListener {
 
@@ -56,9 +63,17 @@ class MyProfile : AppCompatActivity() {
                 // 알림을 켜는 처리를 여기에 구현합니다.
                 // 예: 알림 기능을 활성화하는 코드
             } else {
-                // 알림을 끄는 처리를 여기에 구현합니다.
-                // 예: 알림 기능을 비활성화하는 코드
+                // 알림 취소
+                //notificationManager.cancel(NOTIFICATION_ID)
             }
+        }
+
+        // set_Address LinearLayout을 클릭했을 때 클릭했을 때 주소지 변경 페이지로 이동
+        set_Address.setOnClickListener {
+
+            val intent = Intent(this, SetAddress::class.java)
+            startActivity(intent)
+
         }
     }
 

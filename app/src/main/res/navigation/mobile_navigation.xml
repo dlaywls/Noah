@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.noah.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_community"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.noah.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_map"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
@@ -25,7 +25,23 @@
     <fragment
         android:id="@+id/navigation_boardWrite"
         android:name="com.example.noah.ui.home.BoardWrite"
-        android:label="@string/title_home"
+        android:label="@string/title_write"
         tools:layout="@layout/fragment_board_write" />
+    <fragment
+        android:id="@+id/navigation_whatToDo"
+        android:name="com.example.noah.ui.home.WhatToDo"
+        android:label="@string/title_what_to_do"
+        tools:layout="@layout/fragment_what_to_do" />
+    <activity
+        android:id="@+id/navigation_my_profile"
+        android:name="com.example.noah.MyProfile"
+        android:label="@string/title_my_profile"
+        tools:layout="@layout/activity_my_profile" />
+    <fragment
+        android:id="@+id/navigation_comment"
+        android:name="com.example.noah.ui.home.Comment"
+        android:label="@string/title_community"
+        tools:layout="@layout/fragment_comment" />
+
 
 </navigation>
