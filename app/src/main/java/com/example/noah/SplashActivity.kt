@@ -8,7 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        startActivity(intent)
+        try {
+            Thread.sleep(2000) // splash 화면 대기 시간
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+
+        startActivity(Intent(this, MainActivity::class.java)) // splash 화면이 끝난 뒤 띄울 Activity
+
         finish()
-}}
+    }
+}

@@ -10,11 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
-import com.example.noah.Borad_DBManager
+import com.example.noah.DBManager
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -32,8 +33,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val view=inflater.inflate(R.layout.fragment_home, container, false)
 
         recyclerView=view.findViewById(R.id.main_recycler_view)
-        myButton=view.findViewById(R.id.main_My_button)
-        writeButton=view.findViewById(R.id.main_write_button)
 
         return view
     }
@@ -60,7 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-        val boradDbManager = Borad_DBManager(requireContext())
+        val boradDbManager = DBManager(requireContext())
 
 
 
@@ -70,7 +69,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val cursor:Cursor
         cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
-            val id=cursor.getInt(cursor.getColumnIndex("id"))
+            val id=cursor.getString(cursor.getColumnIndex("id")).toString()
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
             val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
             dataList.add(HomeViewModel(id,title, contents))
@@ -82,16 +81,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         boradDbManager.close()
 
 
-        val adapter = BoardAdapter(dataList){selectedItem->
-
-            val bundle = Bundle()
-            bundle.putString("itemTitle", selectedItem.title)
-            bundle.putString("itemContents", selectedItem.contents)
-
-            findNavController().navigate(R.id.navigation_comment,bundle)
-
-
-        }
+        val adapter = BoardAdapter(requireContext(),dataList,this)
         adapter.notifyDataSetChanged()
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
