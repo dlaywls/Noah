@@ -2,6 +2,7 @@ package com.example.noah
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -52,8 +53,12 @@ class SetAddress : AppCompatActivity() {
     ) { result: ActivityResult ->
         //SearchRoad Activity로부터의 결과 값이 이곳으로 전달
         if (result.resultCode == RESULT_OK) {
+            Log.d("dataResult", "data 없음")
             if (result.data != null) {
+                Log.d("dataResult", "data 읽기")
                 val data = result.data!!.getStringExtra("data")
+                Log.d("dataResult", data.toString())
+//                val data = result.data?.getStringExtra("data")
                 mEtAddress.setText(data)
             }
         }
