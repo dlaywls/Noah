@@ -8,9 +8,10 @@ import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 class SearchRoadActivity : AppCompatActivity() {
+    // BridgeInterface에서 사용할 액티비티 변수
+    private lateinit var bridgeActivity: Activity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +19,12 @@ class SearchRoadActivity : AppCompatActivity() {
 
         val webView = findViewById<WebView>(R.id.webView)
         webView.settings.javaScriptEnabled = true
+
+        // BridgeInterface에 현재 액티비티(this) 할당
+        bridgeActivity = this
         webView.addJavascriptInterface(BridgeInterface(), "Android")
+
+//        webView.addJavascriptInterface(BridgeInterface(), "Android")
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 //Android->Javascript 함수 호출
@@ -32,18 +38,16 @@ class SearchRoadActivity : AppCompatActivity() {
     }
 
     class BridgeInterface {
-
         @JavascriptInterface
         fun processDATA(data: String) {
             //다음(카카오) 주소 검색 API의 결과 값이 브릿지 통로를 통해 전달
             val intent = Intent()
             intent.putExtra("data", data)
             Log.d("dataMove", data)
-            (context as? Activity)?.run {
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            }
+            bridgeActivity.setResult(Activity.RESULT_OK, intent)
+            bridgeActivity.finish()
         }
     }
+
 
 }
