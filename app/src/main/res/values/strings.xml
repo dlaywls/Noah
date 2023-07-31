@@ -7,7 +7,7 @@
     <string name="title_set_address">주소지 변경</string>
     <string name="title_map">지도</string>
     <string name="title_notifications">알림</string>
-    <string name="kakao_app_key">47939324fbf96f947b79074c122ed360</string>
+    <string name="kakao_app_key">349bfd72de9758c2ea3eca3d73454c59</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--조치사항-->

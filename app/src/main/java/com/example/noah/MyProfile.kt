@@ -1,13 +1,9 @@
 package com.example.noah
 
-import android.app.NotificationManager
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Switch
 import com.kakao.sdk.user.UserApiClient
@@ -34,10 +30,10 @@ class MyProfile : AppCompatActivity() {
             // 로그아웃
             UserApiClient.instance.logout { error ->
                 if (error != null) {
-                    Log.e(TAG, "로그아웃 실패. SDK에서 토큰 삭제됨", error)
+                    Log.e("logout", "로그아웃 실패. SDK에서 토큰 삭제됨", error)
                 }
                 else {
-                    Log.i(TAG, "로그아웃 성공. SDK에서 토큰 삭제됨")
+                    Log.i("logout", "로그아웃 성공. SDK에서 토큰 삭제됨")
                 }
             }
         }
@@ -47,10 +43,10 @@ class MyProfile : AppCompatActivity() {
             // 회원탈퇴
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
-                    Log.e(TAG, "연결 끊기 실패", error)
+                    Log.e("unlink", "회원 탈퇴 실패", error)
                 }
                 else {
-                    Log.i(TAG, "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                    Log.i("unlink", "회원 탈퇴 성공. SDK에서 토큰 삭제 됨")
                 }
             }
 
