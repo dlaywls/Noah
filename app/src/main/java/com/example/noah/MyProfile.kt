@@ -68,7 +68,7 @@ class MyProfile : AppCompatActivity() {
         // set_Address LinearLayout을 클릭했을 때 클릭했을 때 주소지 변경 페이지로 이동
         setAddress.setOnClickListener {
 
-            val intent = Intent(this@MyProfile, SetAddress::class.java)
+            val intent = Intent(this, SetAddress::class.java)
             startActivity(intent)
 
         }

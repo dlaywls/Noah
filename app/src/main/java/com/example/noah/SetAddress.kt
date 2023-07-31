@@ -11,19 +11,22 @@ import androidx.appcompat.app.AppCompatActivity
 class SetAddress : AppCompatActivity() {
 
 //    lateinit var getAddress: EditText // EditText 변수를 lateinit으로 선언
-    var mEtAddress: EditText? = findViewById(R.id.et_address)
+      lateinit var mEtAddress: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_address)
 
+        mEtAddress = findViewById(R.id.et_address)
+
         //block touch
-        mEtAddress?.isFocusable ?: false
-        mEtAddress?.setOnClickListener {
+        mEtAddress.isFocusable ?: false
+        mEtAddress.setOnClickListener {
             //주소 검색 웹뷰 화면으로 이동
             val intent = Intent(this@SetAddress, SearchRoadActivity::class.java)
             getSearchResult.launch(intent)
         }
+
 
 //        getAddress = findViewById(R.id.getAddress) // findViewById는 onCreate 내부에서 호출
 //
@@ -47,12 +50,13 @@ class SetAddress : AppCompatActivity() {
     private val getSearchResult = registerForActivityResult<Intent, ActivityResult>(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
-        //Search Activity로부터의 결과 값이 이곳으로 전달
+        //SearchRoad Activity로부터의 결과 값이 이곳으로 전달
         if (result.resultCode == RESULT_OK) {
             if (result.data != null) {
                 val data = result.data!!.getStringExtra("data")
-                mEtAddress?.setText(data)
+                mEtAddress.setText(data)
             }
         }
     }
+
 }

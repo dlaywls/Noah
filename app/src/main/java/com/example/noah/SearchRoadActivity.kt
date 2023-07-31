@@ -20,7 +20,7 @@ class SearchRoadActivity : AppCompatActivity() {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 //Android->Javascript 함수 호출
-                webView.loadUrl("javascript:sample2_execDaumPostCode();")
+                webView.loadUrl("javascript:sample2_execDaumPostcode();")
             }
         }
 
