@@ -1,6 +1,5 @@
 package com.example.noah
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
-
 
         // 토큰 있는지 확인
         if (AuthApiClient.instance.hasToken()) {
