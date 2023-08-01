@@ -1,7 +1,6 @@
 package com.example.noah.ui.home
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -11,24 +10,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
 import com.example.noah.DBManager
 import com.example.noah.MainActivity
-import retrofit2.Retrofit
-import java.text.FieldPosition
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
     lateinit var recyclerView:RecyclerView
-    lateinit var  myButton:Button
-    lateinit var writeButton:Button
     lateinit var sqliteDB:SQLiteDatabase
     private lateinit var adapter:BoardAdapter
 
@@ -50,7 +42,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     @SuppressLint("Range")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //setContentView(R.layout.activity_main)
 
         val writeButton = view.findViewById<Button>(R.id.main_write_button)
         writeButton.setOnClickListener {
@@ -75,12 +66,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
         cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
+        dataList.clear()
         while(cursor.moveToNext()) {
             val id=cursor.getLong(cursor.getColumnIndex("id"))
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
             val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
 
-            dataList.clear()
             dataList.add(HomeViewModel(id,title, contents))
             Log.d("dataList", dataList.toString())
         }

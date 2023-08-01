@@ -87,23 +87,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun changeFragment(index: Int){
-        when(index){
-            1 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frameLayout, HomeFragment())
-                    .commit()
-            }
-
-            2 -> {
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frameLayout, Comment())
-                    .commit()
-            }
-        }
-    }
     fun fragmentChange_for_adapter(frag: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, frag).commit()
     }
