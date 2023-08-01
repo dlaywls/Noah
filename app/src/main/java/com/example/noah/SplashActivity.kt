@@ -3,6 +3,7 @@ package com.example.noah
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.noah.ui.home.HomeFragment
 
 
 class SplashActivity : AppCompatActivity() {

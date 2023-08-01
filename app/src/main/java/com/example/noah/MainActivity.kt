@@ -18,6 +18,9 @@ import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.util.Utility
 import android.util.Log
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.noah.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,9 +56,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨) -> 홈 화면으로 이동
-                    val intent = Intent(this, DashboardFragment::class.java)
+                    /*val intent = Intent(this, HomeFragment::class.java)
                     startActivity(intent)
-                    finish()
+                    finish()*/
+
+                    val manager:FragmentManager=supportFragmentManager
+                    val transaction:FragmentTransaction=manager.beginTransaction()
+                    transaction.replace(R.id.frameLayout, HomeFragment()).commit()
                 }
             }
         } else {
@@ -63,6 +70,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, login::class.java)
             startActivity(intent)
             finish()
+            /*val manager:FragmentManager=supportFragmentManager
+            val transaction:FragmentTransaction=manager.beginTransaction()
+            transaction.replace(R.id.frameLayout, DashboardFragment).commit()*/
         }
 
 

@@ -1,6 +1,7 @@
 package com.example.noah.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
 import com.example.noah.DBManager
+import retrofit2.Retrofit
+import java.text.FieldPosition
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -24,6 +27,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var  myButton:Button
     lateinit var writeButton:Button
     lateinit var sqliteDB:SQLiteDatabase
+
+    private val dataList= mutableListOf<HomeViewModel>()
+    private val adapter = BoardAdapter(dataList)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,7 +69,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
 
-        val dataList= mutableListOf<HomeViewModel>()
 
         sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
@@ -80,8 +85,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         sqliteDB.close()
         boradDbManager.close()
 
+        adapter.setItemClickListener(object: BoardAdapter.OnItemClickListner {
+            override fun onClick(v:View,position: Int){
+                var clickedItem=dataList[position]
+                val itmeTitle=clickedItem.title
+                val itemId=clickedItem.title
+                val itemContents=clickedItem.contents
+                val intent=Intent(context,Comment::class.java)
+                intent.putExtra("itmeTitle",itmeTitle)
+                intent.putExtra("itemId",itemId)
+                intent.putExtra("itemContents",itemContents)
+                startActivity(intent)
 
-        val adapter = BoardAdapter(requireContext(),dataList,this)
+            }
+        })
+
         adapter.notifyDataSetChanged()
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
