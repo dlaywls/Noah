@@ -27,7 +27,6 @@ class SetAddress : AppCompatActivity() {
             getSearchResult.launch(intent)
         }
 
-
 //        getAddress = findViewById(R.id.getAddress) // findViewById는 onCreate 내부에서 호출
 //
 //        getAddress.addTextChangedListener(object : TextWatcher {
