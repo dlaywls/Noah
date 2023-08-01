@@ -29,6 +29,7 @@
             android:name=".login"
             android:exported="false" />
 
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"

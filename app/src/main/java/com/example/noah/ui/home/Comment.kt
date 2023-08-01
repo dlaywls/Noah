@@ -35,7 +35,9 @@ class Comment : Fragment() {
     lateinit var commentsEditText: EditText
     
     val dataList= mutableListOf<CommentModel>()
-    val commentDbManager = DBManager(requireContext())
+
+    lateinit var commentDBManager: DBManager
+
 
     private var itemBoard_id: String? = null
     private var itemTitle: String? = null
@@ -49,6 +51,7 @@ class Comment : Fragment() {
         // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_comment, container, false)
 
+        commentDBManager = DBManager(requireContext())
 
         commentsRecyclerView = view.findViewById(R.id.commnets_recyclerView)
         sendButton=view.findViewById(R.id.img_send)
@@ -61,6 +64,9 @@ class Comment : Fragment() {
         itemContents=arguments?.getString("itemContents")
         itemTitle=arguments?.getString("itemTitle")
 
+        Log.d("item", itemBoard_id.toString())
+        Log.d("item", itemContents.toString())
+
         // 가져온 데이터를 텍스트뷰에 설정
         titleTextView.text = itemTitle
         contentsTextView.text = itemContents
@@ -72,7 +78,7 @@ class Comment : Fragment() {
     private fun loadDataFromDB() {
         dataList.clear()
         GlobalScope.launch(Dispatchers.IO) {
-            val db = commentDbManager.readableDatabase
+            val db = commentDBManager.readableDatabase
             val cursor: Cursor
             cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoard_id';", null)
             while (cursor.moveToNext()) {
@@ -84,7 +90,7 @@ class Comment : Fragment() {
 
             cursor.close()
             db.close()
-            commentDbManager.close()
+            commentDBManager.close()
 
             // 어댑터에 데이터 변경을 알리는 코드
             withContext(Dispatchers.Main) {
@@ -102,13 +108,13 @@ class Comment : Fragment() {
         sendButton.setOnClickListener {
             val strComments = commentsEditText.text.toString().trim()
 
-            sqliteDB=commentDbManager.writableDatabase
+            sqliteDB=commentDBManager.writableDatabase
             if (strComments.isNotEmpty()) {
                 // 데이터 삽입 (파라미터 바인딩 사용)
                 val sql = "INSERT INTO commentsDB(board_id, comments) VALUES(?, ?);"
                 val args = arrayOf(itemBoard_id, strComments)
                 GlobalScope.launch(Dispatchers.IO) {
-                    commentDbManager.writableDatabase.execSQL(sql, args)
+                    commentDBManager.writableDatabase.execSQL(sql, args)
                 }
                 // 삽입 후 댓글 목록을 갱신
                 loadDataFromDB()
