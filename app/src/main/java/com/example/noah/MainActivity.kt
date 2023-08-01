@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.noah.ui.home.Comment
 import com.example.noah.ui.home.HomeFragment
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
 

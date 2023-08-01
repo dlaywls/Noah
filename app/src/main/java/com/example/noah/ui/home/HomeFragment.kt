@@ -30,9 +30,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var  myButton:Button
     lateinit var writeButton:Button
     lateinit var sqliteDB:SQLiteDatabase
+    private lateinit var adapter:BoardAdapter
 
     private val dataList= mutableListOf<HomeViewModel>()
-    private val adapter = BoardAdapter(dataList)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -90,6 +90,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         boradDbManager.close()
 
         val mActivity=activity as MainActivity
+        adapter = BoardAdapter(dataList)
 
         //글 클릭했을 때 해당 글 데이터 bundle에 넣고 comment프래그먼트로 이동
         adapter.setItemClickListener(object: BoardAdapter.OnItemClickListner {
@@ -113,7 +114,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         })
 
-        adapter.notifyDataSetChanged()
+        //adapter.notifyDataSetChanged()
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         recyclerView.adapter = adapter
