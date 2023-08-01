@@ -23,8 +23,8 @@ class DashboardFragment : Fragment() {
         val binding = FragmentDashboardBinding.inflate(inflater, container, false)
         context ?: return binding.root
 
-       // val mapView = MapView(context)
-       // binding.mapView.addView(mapView)
+        val mapView = MapView(context)
+        binding.mapView.addView(mapView)
 
         return binding.root
     }

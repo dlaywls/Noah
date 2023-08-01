@@ -19,7 +19,7 @@ class SetAddress : AppCompatActivity() {
         setContentView(R.layout.activity_set_address)
 
         mEtAddress = findViewById(R.id.et_address)
-        button_setAddress = findViewById(R.id.button_setAddress)
+        button_setAddress = findViewById(R.id.button_set)
 
         //block touch
         mEtAddress.isFocusable ?: false

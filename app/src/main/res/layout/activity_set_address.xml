@@ -33,7 +33,7 @@
                 android:gravity="center_vertical|start"
                 android:textColorHint="@color/white"
                 android:textColor="@color/white"
-                android:hint="건물명, 도로명 또는 지번으로 검색"
+                android:hint="더블클릭하여 검색"
                 android:layout_weight="1"/>
 
             <ImageView
@@ -112,7 +112,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_setAddress"
+        android:id="@+id/button_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
