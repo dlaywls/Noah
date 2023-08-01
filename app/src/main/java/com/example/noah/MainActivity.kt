@@ -1,5 +1,6 @@
 package com.example.noah
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
@@ -10,7 +11,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.noah.databinding.ActivityMainBinding
-import com.example.noah.ui.dashboard.DashboardFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.KakaoSdkError
@@ -19,9 +19,9 @@ import com.kakao.sdk.common.util.Utility
 import android.util.Log
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.noah.ui.dashboard.DashboardFragment
 import com.example.noah.ui.home.Comment
 import com.example.noah.ui.home.HomeFragment
-import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
 
