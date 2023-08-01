@@ -7,14 +7,12 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
-import android.text.Editable
-import android.text.TextWatcher
 
 
 class SetAddress : AppCompatActivity() {
 
-      lateinit var mEtAddress: EditText
-      lateinit var button_setAddress: Button
+    lateinit var mEtAddress: EditText
+    lateinit var button_setAddress: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +30,11 @@ class SetAddress : AppCompatActivity() {
         }
 
         // 확인 버튼 누르면 마이프로필 화면으로 다시 돌아가기
-        button_setAddress.setOnClickListener(){
+        button_setAddress.setOnClickListener() {
             //마이프로필로 다시 이동
             val intent = Intent(this, MyProfile::class.java)
             getSearchResult.launch(intent)
-            
+
         }
     }
 
@@ -50,4 +48,7 @@ class SetAddress : AppCompatActivity() {
                 mEtAddress.setText(data)
 
 
+            }
+        }
+    }
 }
