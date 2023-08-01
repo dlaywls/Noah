@@ -15,11 +15,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.noah.Borad_DBManager
-import com.example.noah.Comment_DBManager
+import com.example.noah.DBManager
 import com.example.noah.R
-
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class Comment : Fragment() {
@@ -32,11 +33,15 @@ class Comment : Fragment() {
     lateinit var titleTextView:TextView
     lateinit var contentsTextView:TextView
     lateinit var commentsEditText: EditText
-
+    
     val dataList= mutableListOf<CommentModel>()
-    val itemTitle = arguments?.getString("itemTitle",null)
-    val itemContents = arguments?.getString("itemContents",null)
-    val commentDbManager = Comment_DBManager(requireContext())
+
+    lateinit var commentDBManager: DBManager
+
+
+    private var itemBoard_id: String? = null
+    private var itemTitle: String? = null
+    private var itemContents: String? = null
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -45,15 +50,57 @@ class Comment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_comment, container, false)
-        // RecyclerView 초기화
+
+        commentDBManager = DBManager(requireContext())
+
         commentsRecyclerView = view.findViewById(R.id.commnets_recyclerView)
         sendButton=view.findViewById(R.id.img_send)
         commentsEditText=view.findViewById(R.id.comments_editText)
         titleTextView=view.findViewById(R.id.comments_item_title_text)
         contentsTextView=view.findViewById(R.id.comments_item_contents_text)
 
-        titleTextView.text=itemTitle
-        titleTextView.text=itemContents
+
+        itemBoard_id=arguments?.getString("itemId")
+        itemContents=arguments?.getString("itemContents")
+        itemTitle=arguments?.getString("itemTitle")
+
+        Log.d("item", itemBoard_id.toString())
+        Log.d("item", itemContents.toString())
+
+        // 가져온 데이터를 텍스트뷰에 설정
+        titleTextView.text = itemTitle
+        contentsTextView.text = itemContents
+
+
+        return view
+    }
+    @SuppressLint("Range")
+    private fun loadDataFromDB() {
+        dataList.clear()
+        GlobalScope.launch(Dispatchers.IO) {
+            val db = commentDBManager.readableDatabase
+            val cursor: Cursor
+            cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoard_id';", null)
+            while (cursor.moveToNext()) {
+                val board_id = cursor.getString(cursor.getColumnIndex("board_id")).toString()
+                val comments = cursor.getString(cursor.getColumnIndex("comments")).toString()
+                dataList.add(CommentModel(null, board_id, comments))
+                Log.d("comment: dataList", dataList.toString())
+            }
+
+            cursor.close()
+            db.close()
+            commentDBManager.close()
+
+            // 어댑터에 데이터 변경을 알리는 코드
+            withContext(Dispatchers.Main) {
+                commentsAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
 
@@ -61,50 +108,30 @@ class Comment : Fragment() {
         sendButton.setOnClickListener {
             val strComments = commentsEditText.text.toString().trim()
 
-            sqliteDB=commentDbManager.writableDatabase
+            sqliteDB=commentDBManager.writableDatabase
             if (strComments.isNotEmpty()) {
-                // 데이터 삽입
-                sqliteDB.execSQL("INSERT INTO commentsDB VALUES('"+itemTitle+"','"+strComments+"');")
-
+                // 데이터 삽입 (파라미터 바인딩 사용)
+                val sql = "INSERT INTO commentsDB(board_id, comments) VALUES(?, ?);"
+                val args = arrayOf(itemBoard_id, strComments)
+                GlobalScope.launch(Dispatchers.IO) {
+                    commentDBManager.writableDatabase.execSQL(sql, args)
+                }
+                // 삽입 후 댓글 목록을 갱신
+                loadDataFromDB()
             } else {
                 Toast.makeText(context, "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
-            sqliteDB.close()
 
 
         }
-
-
-        return view
-    }
-
-    @SuppressLint("Range")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-        sqliteDB=commentDbManager.readableDatabase
-        val cursor: Cursor
-        cursor=sqliteDB.rawQuery("SELECT * FROM commentDB WHERE title='$itemTitle';",null)
-        while(cursor.moveToNext()) {
-            val title=cursor.getString(cursor.getColumnIndex("title")).toString()
-            val comments = cursor.getString(cursor.getColumnIndex("comments")).toString()
-            dataList.add(CommentModel(title, comments))
-            Log.d("comment: dataList", dataList.toString())
-        }
-
-        cursor.close()
-        sqliteDB.close()
-        commentDbManager.close()
-
-        //dataList.add(CommentModel(1, "This is item 1"))
-
+        // 댓글 목록을 로드하고 어댑터 설정
+        loadDataFromDB()
         commentsAdapter = CommentAdapter(dataList)
-        commentsRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        commentsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         commentsRecyclerView.adapter = commentsAdapter
-        // 어댑터에 데이터 변경을 알리는 코드
-        //commentsAdapter.notifyDataSetChanged()
+
     }
+
 
 
 }
