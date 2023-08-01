@@ -31,7 +31,7 @@ class DashboardFragment : Fragment() {
         binding.mapView.addView(mapView)
 
         //마커 추가
-        val apiData = TestApiData()
+        /*val apiData = TestApiData()
         val dataArr = apiData.getData()
 
         val markerArr = ArrayList<MapPOIItem>()
@@ -41,7 +41,7 @@ class DashboardFragment : Fragment() {
             marker.itemName = data.value.toString()
             markerArr.add(marker)
         }
-        mapView.addPOIItems(markerArr.toTypedArray())
+        mapView.addPOIItems(markerArr.toTypedArray())*/
 
         return binding.root
     }
