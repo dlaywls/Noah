@@ -13,7 +13,7 @@ class MyProfile : AppCompatActivity() {
     private lateinit var logoutButton: LinearLayout
     private lateinit var deleteIdButton: LinearLayout
     private lateinit var notificationSwitch: Switch
-    private lateinit var set_Address: LinearLayout
+    private lateinit var setAddress: LinearLayout
     //val notificationManager = this.getSystemService(this.NOTIFICATION_SERVICE) as NotificationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class MyProfile : AppCompatActivity() {
         logoutButton = findViewById(R.id.logoutButton)
         deleteIdButton = findViewById(R.id.deleteIdButton)
         notificationSwitch = findViewById(R.id.notificationSwitch)
-        set_Address = findViewById(R.id.set_Address)
+        setAddress = findViewById(R.id.set_Address)
 
         logoutButton.setOnClickListener {
 
@@ -71,7 +71,7 @@ class MyProfile : AppCompatActivity() {
         }
 
         // set_Address LinearLayout을 클릭했을 때 클릭했을 때 주소지 변경 페이지로 이동
-        set_Address.setOnClickListener {
+        setAddress.setOnClickListener {
 
             val intent = Intent(this, SetAddress::class.java)
             startActivity(intent)
