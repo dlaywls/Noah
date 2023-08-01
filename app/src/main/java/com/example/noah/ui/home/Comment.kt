@@ -39,7 +39,7 @@ class Comment : Fragment() {
     lateinit var commentDBManager: DBManager
 
 
-    private var itemBoard_id: String? = null
+    private var itemBoard_id: Long? =null
     private var itemTitle: String? = null
     private var itemContents: String? = null
 
@@ -61,12 +61,13 @@ class Comment : Fragment() {
 
 
         //번들의 데이터 가져옴
-        itemBoard_id=arguments?.getString("itemId")
+        itemBoard_id=arguments?.getLong("itemId")
         itemContents=arguments?.getString("itemContents")
         itemTitle=arguments?.getString("itemTitle")
 
         Log.d("item", itemBoard_id.toString())
         Log.d("item", itemContents.toString())
+        Log.d("item", itemTitle.toString())
 
         // 가져온 데이터를 텍스트뷰에 설정
         titleTextView.text = itemTitle
@@ -83,7 +84,7 @@ class Comment : Fragment() {
             val cursor: Cursor
             cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoard_id';", null)
             while (cursor.moveToNext()) {
-                val board_id = cursor.getString(cursor.getColumnIndex("board_id")).toString()
+                val board_id = cursor.getLong(cursor.getColumnIndex("board_id"))
                 val comments = cursor.getString(cursor.getColumnIndex("comments")).toString()
                 dataList.add(CommentModel(null, board_id, comments))
                 Log.d("comment: dataList", dataList.toString())

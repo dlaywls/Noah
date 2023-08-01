@@ -41,6 +41,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val view=inflater.inflate(R.layout.fragment_home, container, false)
 
+        //리사이클러뷰 초기화
         recyclerView=view.findViewById(R.id.main_recycler_view)
 
         return view
@@ -70,17 +71,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val boradDbManager = DBManager(requireContext())
 
-
-
-
         //데이터 리스트에 커뮤니티 제목, 글 넣음
         sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
         cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
-            val id=cursor.getString(cursor.getColumnIndex("id")).toString()
+            val id=cursor.getLong(cursor.getColumnIndex("id"))
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
             val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
+
+            dataList.clear()
             dataList.add(HomeViewModel(id,title, contents))
             Log.d("dataList", dataList.toString())
         }
@@ -97,12 +97,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             override fun onClick(v:View,position: Int){
                 var clickedItem=dataList[position]
                 val itmeTitle=clickedItem.title
-                val itemId=clickedItem.title
+                val itemId=clickedItem.id
                 val itemContents=clickedItem.contents
                 //val intent=Intent(context,Comment::class.java)
                 var fragment:Fragment=Comment()
                 var bundle:Bundle=Bundle()
-                bundle.putString("itemId",itemId)
+                if (itemId != null) {
+                    bundle.putLong("itemId",itemId)
+                }
                 bundle.putString("itemTitle",itmeTitle)
                 bundle.putString("itemContents",itemContents)
                 //fragment.arguments=bundle
