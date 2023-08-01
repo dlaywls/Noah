@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.DBManager
 import com.example.noah.R
+import com.kakao.sdk.auth.AuthApiClient
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -42,6 +44,7 @@ class Comment : Fragment() {
     private var itemBoard_id: Long? =null
     private var itemTitle: String? = null
     private var itemContents: String? = null
+    var comments_user_id: Long=0
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -69,6 +72,14 @@ class Comment : Fragment() {
         Log.d("item", itemContents.toString())
         Log.d("item", itemTitle.toString())
 
+        //회원번호 가져오기
+        if (AuthApiClient.instance.hasToken()) {
+            UserApiClient.instance.me { user, error ->
+                comments_user_id = user?.id!!
+                Log.d("login_o", comments_user_id.toString())
+            }
+        }
+
         // 가져온 데이터를 텍스트뷰에 설정
         titleTextView.text = itemTitle
         contentsTextView.text = itemContents
@@ -76,8 +87,45 @@ class Comment : Fragment() {
 
         return view
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //보내기 버튼 누르면 테이블에 데이터 삽입
+        sendButton.setOnClickListener {
+            //editText에서 댓글 가져오기
+            val strComments = commentsEditText.text.toString().trim()
+
+            sqliteDB=commentDBManager.writableDatabase
+            if (strComments.isNotEmpty()) {
+                // board_id, 댓글 데이터 삽입
+                val sql = "INSERT INTO commentsDB(board_id, comments,comments_user_id) VALUES(?, ?,?);"
+                val args = arrayOf(itemBoard_id, strComments,comments_user_id)
+                GlobalScope.launch(Dispatchers.IO) {
+                    commentDBManager.writableDatabase.execSQL(sql, args)
+                    Log.d("commentDB","comments_user_id")
+                }
+                // 삽입 후 댓글 목록을 갱신
+                loadDataFromDB()
+            //EditText에 글이 없을 때
+            } else {
+                Toast.makeText(context, "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+        // 댓글 목록을 로드하고 어댑터 설정
+        loadDataFromDB()
+        commentsAdapter = CommentAdapter(dataList)
+        commentsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        commentsRecyclerView.adapter = commentsAdapter
+
+    }
+
     @SuppressLint("Range")
     private fun loadDataFromDB() {
+        //데이터 리스트 초기화
         dataList.clear()
         GlobalScope.launch(Dispatchers.IO) {
             val db = commentDBManager.readableDatabase
@@ -100,40 +148,6 @@ class Comment : Fragment() {
                 commentsAdapter.notifyDataSetChanged()
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-
-
-        //보내기 버튼 누르면 테이블에 데이터 삽입
-        sendButton.setOnClickListener {
-            val strComments = commentsEditText.text.toString().trim()
-
-            sqliteDB=commentDBManager.writableDatabase
-            if (strComments.isNotEmpty()) {
-                // 데이터 삽입
-                val sql = "INSERT INTO commentsDB(board_id, comments) VALUES(?, ?);"
-                val args = arrayOf(itemBoard_id, strComments)
-                GlobalScope.launch(Dispatchers.IO) {
-                    commentDBManager.writableDatabase.execSQL(sql, args)
-                }
-                // 삽입 후 댓글 목록을 갱신
-                loadDataFromDB()
-            } else {
-                Toast.makeText(context, "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-
-
-        }
-        // 댓글 목록을 로드하고 어댑터 설정
-        loadDataFromDB()
-        commentsAdapter = CommentAdapter(dataList)
-        commentsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        commentsRecyclerView.adapter = commentsAdapter
-
     }
 
 

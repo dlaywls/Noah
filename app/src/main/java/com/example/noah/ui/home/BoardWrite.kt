@@ -26,8 +26,6 @@ class BoardWrite() : Fragment() {
     lateinit var registButton: Button
     lateinit var sqlitedb:SQLiteDatabase
 
-    //임시 id
-    lateinit var writeIdEdit:EditText
     var user_id: Long = 0
     var id:Long=0
 
@@ -42,15 +40,11 @@ class BoardWrite() : Fragment() {
 
         writeTitleEdit = view.findViewById(R.id.title_edit)
         writeContentsEdit = view.findViewById(R.id.contents_edit)
-
-        writeIdEdit = view.findViewById(R.id.id_edit_test)
-
         registButton = view.findViewById(R.id.regist_button)
-
 
         val boardDbManager = DBManager(requireContext())
 
-
+        //회원번호 가져오기
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.me { user, error ->
                 user_id = user?.id!!
@@ -58,11 +52,14 @@ class BoardWrite() : Fragment() {
             }
         }
 
+        //등록 버튼 클릭
         registButton.setOnClickListener {
 
             //board_id값 랜덤으로 지정
             val random = (1..1000).random()
             id= random.toLong()
+
+            //에디트 텍스트의 Title, contents 받기
             val strTitle = writeTitleEdit.text.toString().trim()
             val strContents = writeContentsEdit.text.toString().trim()
 
