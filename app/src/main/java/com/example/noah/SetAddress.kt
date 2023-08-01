@@ -10,7 +10,6 @@ import android.widget.Button
 
 
 class SetAddress : AppCompatActivity() {
-
     lateinit var mEtAddress: EditText
     lateinit var button_setAddress: Button
 
