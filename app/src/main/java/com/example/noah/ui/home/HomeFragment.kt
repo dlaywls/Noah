@@ -1,6 +1,7 @@
 package com.example.noah.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -10,11 +11,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
 import com.example.noah.DBManager
+import com.example.noah.MainActivity
+import retrofit2.Retrofit
+import java.text.FieldPosition
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -22,7 +29,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var recyclerView:RecyclerView
     lateinit var  myButton:Button
     lateinit var writeButton:Button
-    lateinit var sqlitedDB:SQLiteDatabase
+    lateinit var sqliteDB:SQLiteDatabase
+    private lateinit var adapter:BoardAdapter
+
+    private val dataList= mutableListOf<HomeViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,8 +42,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val view=inflater.inflate(R.layout.fragment_home, container, false)
 
         recyclerView=view.findViewById(R.id.main_recycler_view)
-        myButton=view.findViewById(R.id.main_My_button)
-        writeButton=view.findViewById(R.id.main_write_button)
 
         return view
     }
@@ -60,17 +68,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-        val dbManager = DBManager(requireContext())
+        val boradDbManager = DBManager(requireContext())
 
 
 
-        val dataList= mutableListOf<HomeViewModel>()
 
-        sqlitedDB=dbManager.readableDatabase
+        //데이터 리스트에 커뮤니티 제목, 글 넣음
+        sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
-        cursor=sqlitedDB.rawQuery("SELECT * FROM board;",null)
+        cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
-            val id=cursor.getInt(cursor.getColumnIndex("id"))
+            val id=cursor.getString(cursor.getColumnIndex("id")).toString()
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
             val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
             dataList.add(HomeViewModel(id,title, contents))
@@ -78,18 +86,40 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         cursor.close()
-        sqlitedDB.close()
-        dbManager.close()
+        sqliteDB.close()
+        boradDbManager.close()
 
+        val mActivity=activity as MainActivity
+        adapter = BoardAdapter(dataList)
 
-        val adapter = BoardAdapter(dataList)
-        adapter.notifyDataSetChanged()
+        //글 클릭했을 때 해당 글 데이터 bundle에 넣고 comment프래그먼트로 이동
+        adapter.setItemClickListener(object: BoardAdapter.OnItemClickListner {
+            override fun onClick(v:View,position: Int){
+                var clickedItem=dataList[position]
+                val itmeTitle=clickedItem.title
+                val itemId=clickedItem.title
+                val itemContents=clickedItem.contents
+                //val intent=Intent(context,Comment::class.java)
+                var fragment:Fragment=Comment()
+                var bundle:Bundle=Bundle()
+                bundle.putString("itemId",itemId)
+                bundle.putString("itemTitle",itmeTitle)
+                bundle.putString("itemContents",itemContents)
+                //fragment.arguments=bundle
+
+                mActivity.fragmentChange_for_adapter(fragment)
+                Log.d("setItemClickListener","클릭 됨")
+                findNavController().navigate(R.id.navigation_comment,bundle)
+
+            }
+        })
+
+        //adapter.notifyDataSetChanged()
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
         recyclerView.adapter = adapter
 
     }
-
 
 
 }

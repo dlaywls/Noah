@@ -7,56 +7,21 @@
     android:orientation="vertical"
     tools:context=".SetAddress">
 
-<<<<<<< Updated upstream
-    <!-- 지도 창 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray3"
-        android:layout_weight="1.3"
-        />
-
-    <!-- 지도 아래 공간 : white -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-=======
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
->>>>>>> Stashed changes
         android:layout_weight="1"
         android:padding="30dp"
         android:orientation="vertical">
 
-<<<<<<< Updated upstream
         <!-- 주소지 검색창 -->
-=======
-        <!--주소지 검색창-->
->>>>>>> Stashed changes
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:paddingHorizontal="15dp"
-<<<<<<< Updated upstream
-            android:background="@drawable/rounded_box_gray1">
-
-            <!-- 주소지 검색입력창 -->
-            <EditText
-                android:id="@+id/getAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textColor="@color/gray2"
-                android:textSize="15sp"
-                android:gravity="center_vertical|start"
-                android:hint="건물명, 도로명 또는 지번으로 검색"
-                android:layout_weight="1"/>
-
-            <!-- 검색 버튼 -->
-=======
             android:background="@drawable/rounded_box_gray2">
 
             <!--주소지 검색입력창-->
@@ -71,8 +36,6 @@
                 android:hint="건물명, 도로명 또는 지번으로 검색"
                 android:layout_weight="1"/>
 
-            <!--검색 버튼-->
->>>>>>> Stashed changes
             <ImageView
                 android:id="@+id/search_button"
                 android:layout_width="20dp"
@@ -83,19 +46,6 @@
 
         </LinearLayout>
 
-<<<<<<< Updated upstream
-        <!-- 주소지 검색 예시 txt -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:textSize="12sp"
-            android:textColor="@color/gray3"
-            android:textStyle="bold"
-            android:text="이렇게 검색해 보세요" />
-
-        <!-- 도로명주소 -->
-=======
         <!--주소지 검색 예시 txt -->
         <TextView
             android:layout_width="wrap_content"
@@ -123,30 +73,6 @@
             android:textColor="@color/green"
             android:text="예시) 서울특별시 노원구 화랑로 621"/>
 
-            <!--지번 주소-->
->>>>>>> Stashed changes
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textSize="12sp"
-            android:textColor="@color/gray2"
-<<<<<<< Updated upstream
-            android:text="도로명 건물번호"
-=======
-            android:text="지역명(동/리) + 번지 "
->>>>>>> Stashed changes
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:textSize="12sp"
-            android:textColor="@color/green"
-<<<<<<< Updated upstream
-            android:text="예시) 서울특별시 노원구 화랑로 621"
-            />
-
         <!-- 지번 주소 -->
         <TextView
             android:layout_width="wrap_content"
@@ -165,13 +91,7 @@
             android:text="예시) 서울특별시 노원구 공릉동 113"
             />
 
-        <!-- 건물주소 -->
-=======
-            android:text="예시) 서울특별시 노원구 공릉동 113"
-            />
-
             <!--건물주소 -->
->>>>>>> Stashed changes
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -191,8 +111,6 @@
 
     </LinearLayout>
 
-    <!-- 확인 버튼 : yellow -->
-<<<<<<< Updated upstream
     <Button
         android:id="@+id/button_setAddress"
         android:layout_width="match_parent"
@@ -203,17 +121,6 @@
         android:textColor="@color/black"
         android:background="@drawable/button_yellow"
         android:text="확인" />
-=======
-  <Button
-      android:id="@+id/button_setAddress"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginHorizontal="100dp"
-      android:layout_marginBottom="15dp"
-      android:textStyle="bold"
-      android:textColor="@color/black"
-      android:background="@drawable/button_yellow"
-      android:text="확인" />
->>>>>>> Stashed changes
+
 
 </LinearLayout>

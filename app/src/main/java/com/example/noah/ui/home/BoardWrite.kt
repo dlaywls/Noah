@@ -1,14 +1,17 @@
 package com.example.noah.ui.home
 
 
+import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.noah.DBManager
 import com.example.noah.R
@@ -21,10 +24,11 @@ class BoardWrite() : Fragment() {
     lateinit var registButton: Button
     lateinit var sqlitedb:SQLiteDatabase
 
+    //임시 id
+    lateinit var writeIdEdit:EditText
 
 
-
-
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,22 +38,27 @@ class BoardWrite() : Fragment() {
 
         writeTitleEdit = view.findViewById(R.id.title_edit)
         writeContentsEdit = view.findViewById(R.id.contents_edit)
+
+        writeIdEdit = view.findViewById(R.id.id_edit_test)
+
         registButton = view.findViewById(R.id.regist_button)
 
 
-        val dbManager = DBManager(requireContext())
+        val boardDbManager = DBManager(requireContext())
 
         registButton.setOnClickListener {
+            val strId=writeIdEdit.text.toString().trim()
             val strTitle = writeTitleEdit.text.toString().trim()
             val strContents = writeContentsEdit.text.toString().trim()
 
-            sqlitedb=dbManager.writableDatabase
+            sqlitedb=boardDbManager.writableDatabase
             if (strTitle.isNotEmpty() && strContents.isNotEmpty()) {
                 // 데이터 삽입
-                sqlitedb.execSQL("INSERT INTO board(title,contents) VALUES('"+strTitle+"','"+strContents+"');")
-
+                sqlitedb.execSQL("INSERT INTO board VALUES('"+strId+"','"+strTitle+"','"+strContents+"');")
+                Toast.makeText(context, "등록 완료", Toast.LENGTH_SHORT).show()
+                Log.d("Write","등록 완료")
             } else {
-                //입력 값 비어있을 경우 처리
+                Toast.makeText(context, "글을 입력하세요.", Toast.LENGTH_SHORT).show()
             }
             sqlitedb.close()
 

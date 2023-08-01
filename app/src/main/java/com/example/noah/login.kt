@@ -31,7 +31,7 @@ class login : AppCompatActivity() {
                 Log.i("login_o", "카카오계정으로 로그인 성공 ${token.accessToken}")
 
                 // 로그인 성공 시 MainActivity로 이동하는 코드 추가
-                val intent = Intent(this, DashboardFragment::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
 
                 finish() // 로그인 액티비티를 종료하여 뒤로 가기로 다시 돌아가지 않도록 합니다.

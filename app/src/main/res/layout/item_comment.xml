@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:background="@color/gray1">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/rounded_box_white">
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray2"/>
 
         <TextView
             android:id="@+id/item_name_text"
@@ -20,35 +20,23 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            app:drawableStartCompat="@drawable/ic_person"
             android:text=" 익명 "
 
             />
         <TextView
-            android:id="@+id/item_title_text"
+            android:id="@+id/item_comments_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="title."
-            android:layout_margin="8dp"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            />
-        <TextView
-            android:id="@+id/item_contents_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="contents."
-            android:layout_margin="8dp"
+            android:text="comments."
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginBottom="8dp"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             />
 
 
     </LinearLayout>
-
-
 </LinearLayout>

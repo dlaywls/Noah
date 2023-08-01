@@ -130,6 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
                     android:paddingHorizontal="10dp"
                     android:background="@color/gray1"
                     android:text="@string/what_to_to_earthquake_contents2" />
@@ -225,6 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
                     android:paddingHorizontal="10dp"
                     android:background="@color/gray1"
                     android:text="@string/what_to_do_emergency_contents2" />
@@ -339,17 +341,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
+                    android:layout_marginBottom="5dp"
                     android:paddingHorizontal="10dp"
                     android:background="@color/gray1"
                     android:text="@string/what_to_do_article_contents3" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:paddingHorizontal="10dp"
-                    android:background="@color/gray1"
-                    android:text="@string/what_to_do_article_contents2" />
             </LinearLayout>
 
             <!--국민 재난 안전 포털-->
