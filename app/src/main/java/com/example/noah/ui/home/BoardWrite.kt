@@ -2,7 +2,6 @@ package com.example.noah.ui.home
 
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
@@ -18,8 +17,6 @@ import com.example.noah.DBManager
 import com.example.noah.R
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
-import com.kakao.sdk.user.model.AccessTokenInfo
-import kotlin.properties.Delegates
 
 
 class BoardWrite() : Fragment() {
@@ -31,7 +28,7 @@ class BoardWrite() : Fragment() {
 
     //임시 id
     lateinit var writeIdEdit:EditText
-    var strId: Long = 0
+    var user_id: Long = 0
     var id:Long=0
 
 
@@ -56,29 +53,28 @@ class BoardWrite() : Fragment() {
 
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.me { user, error ->
-                strId = user?.id!!
-                Log.d("login_o", strId.toString())
+                user_id = user?.id!!
+                Log.d("login_o", user_id.toString())
             }
         }
 
         registButton.setOnClickListener {
 
-            val random = (1..1000).random()  // 1 <= n <= 20
+            //board_id값 랜덤으로 지정
+            val random = (1..1000).random()
             id= random.toLong()
-            //val strId=writeIdEdit.text.toString().trim()
             val strTitle = writeTitleEdit.text.toString().trim()
             val strContents = writeContentsEdit.text.toString().trim()
-            //var strId:Long=0
 
 
 
-            Log.d("login_o", strId.toString())
+            Log.d("login_o", user_id.toString())
             sqlitedb=boardDbManager.writableDatabase
             if (strTitle.isNotEmpty() && strContents.isNotEmpty()) {
                 // 데이터 삽입
-                sqlitedb.execSQL("INSERT INTO board VALUES('"+id+"','"+strId+"','"+strTitle+"','"+strContents+"');")
+                sqlitedb.execSQL("INSERT INTO board VALUES('"+id+"','"+user_id+"','"+strTitle+"','"+strContents+"');")
                 Toast.makeText(context, "등록 완료", Toast.LENGTH_SHORT).show()
-                Log.d("Write",strId.toString())
+                Log.d("Write",user_id.toString())
 
             } else {
                 Toast.makeText(context, "글을 입력하세요.", Toast.LENGTH_SHORT).show()
@@ -92,7 +88,6 @@ class BoardWrite() : Fragment() {
         }
         return view
     }
-    //fun accessTokenInfo(callback: (tokenInfo: AccessTokenInfo?, error: Throwable?) -> Unit) {}
 
 
 }

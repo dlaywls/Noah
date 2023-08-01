@@ -14,10 +14,6 @@ class CommentAdapter(private val dataList: List<CommentModel>)
     inner class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val commentsTextView: TextView = itemView.findViewById(R.id.item_comments_text)
 
-        /*fun bind(item:CommentModel){
-            commentsTextView.text=item.comments
-        }*/
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {
