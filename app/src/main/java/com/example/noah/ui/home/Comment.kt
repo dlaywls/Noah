@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.DBManager
 import com.example.noah.R
+import com.example.noah.ui.notifications.NotificationsFragment
+import com.example.noah.ui.notifications.NotifyAdapter
+import com.example.noah.ui.notifications.NotifyModel
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +41,9 @@ class Comment : Fragment() {
     
     val dataList= mutableListOf<CommentModel>()
 
+
     lateinit var commentDBManager: DBManager
+    lateinit var notifyComment: NotificationsFragment
 
 
     private var itemBoardId: Long? =null
@@ -88,6 +93,7 @@ class Comment : Fragment() {
     }
 
 
+    @SuppressLint("Range")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -104,10 +110,23 @@ class Comment : Fragment() {
                 val args = arrayOf(itemBoardId, commentsUserId,strComments,itemUserId)
                 GlobalScope.launch(Dispatchers.IO) {
                     commentDBManager.writableDatabase.execSQL(sql, args)
+
+                    var bundle:Bundle=Bundle()
+                    bundle.putString("comments",strComments)
+                    Log.d("strComments의 값 : ", strComments)
+
+                   //notifyComment.getComment(strComments)
                     Log.d("commentDB","comments_user_id")
                 }
                 // 삽입 후 댓글 목록을 갱신
                 loadDataFromDB()
+
+               //val cursor:Cursor
+               //cursor=sqliteDB.rawQuery("SELECT * FROM commentDB WHERE itemUserId;",null)
+               //val comment1=cursor.getString(cursor.getColumnIndex("commets")).toString()
+
+               //notifyComment.getComment(comment1)
+
             //EditText에 글이 없을 때
             } else {
                 Toast.makeText(context, "댓글을 입력하세요.", Toast.LENGTH_SHORT).show()

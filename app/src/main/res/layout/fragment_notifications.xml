@@ -8,9 +8,11 @@
     tools:context=".ui.notifications.NotificationsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/commentContents"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/recyclerview_item_notification" />
+    android:id="@+id/recyclerview_comment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:listitem="@layout/recyclerview_item_notification"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
 
 </LinearLayout>

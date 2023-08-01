@@ -1,27 +1,27 @@
 package com.example.noah.ui.notifications
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.noah.DBManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
-import com.example.noah.databinding.FragmentNotificationsBinding
 
 class NotificationsFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-    lateinit var commentDBManager: DBManager
-    lateinit var commentContents: TextView
 
-    private var itemComments: String? = null
+    val dataList = mutableListOf<NotifyModel>()
+    lateinit var notifyAdapter : NotifyAdapter
+    lateinit var notifyRecyclerView: RecyclerView
+
+    private var comment : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,24 +31,27 @@ class NotificationsFragment : Fragment() {
         val notificationsViewModel =
             ViewModelProvider(this).get(NotificationsViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        comment=arguments?.getString("comments")
+        Log.d("_comment : ", comment.toString())
+        dataList.add(NotifyModel(comment.toString()))
+        Log.d("Notify comment: dataList", dataList.toString())
 
-        commentDBManager = DBManager(requireContext())
-        commentContents = root.findViewById(R.id.commentContents)
+        val view=inflater.inflate(R.layout.fragment_notifications, container, false)
+        notifyRecyclerView = view.findViewById(R.id.recyclerview_comment)
 
+        // 댓글 목록을 로드하고 어댑터 설정
+        notifyAdapter = NotifyAdapter(dataList)
+        notifyRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)
+        notifyRecyclerView.adapter = notifyAdapter
 
-        return root
+        return view
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+   // fun getComment(comment1 : String)
+   // {
+   //     comment = comment1
+   //     dataList.add(NotifyModel(comment))
+   //     Log.d("Notify comment: dataList", dataList.toString())
+   // }
 
-    fun notifyComment(Coments : String?, ){
-
-        commentContents.text = Coments
-
-    }
 }
