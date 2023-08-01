@@ -54,8 +54,6 @@ class Comment : Fragment() {
         // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_comment, container, false)
 
-        commentDBManager = DBManager(requireContext())
-
         commentsRecyclerView = view.findViewById(R.id.commnets_recyclerView)
         sendButton=view.findViewById(R.id.img_send)
         commentsEditText=view.findViewById(R.id.comments_editText)
@@ -80,10 +78,9 @@ class Comment : Fragment() {
             }
         }
 
-        // 가져온 데이터를 텍스트뷰에 설정
+        // 가져온 데이터를 텍스트뷰에 설정해서 댓글 화면에서 보여줌
         titleTextView.text = itemTitle
         contentsTextView.text = itemContents
-
 
         return view
     }
@@ -98,8 +95,9 @@ class Comment : Fragment() {
             val strComments = commentsEditText.text.toString().trim()
 
             sqliteDB=commentDBManager.writableDatabase
+            //EditText에 글이 있으면
             if (strComments.isNotEmpty()) {
-                // board_id, 댓글 데이터 삽입
+                // 게시판 아이디, 댓글, 데이터 삽입
                 val sql = "INSERT INTO commentsDB(board_id, comments,comments_user_id) VALUES(?, ?,?);"
                 val args = arrayOf(itemBoard_id, strComments,comments_user_id)
                 GlobalScope.launch(Dispatchers.IO) {
@@ -124,13 +122,16 @@ class Comment : Fragment() {
     }
 
     @SuppressLint("Range")
+    //댓글 목록 로드
     private fun loadDataFromDB() {
+
+        commentDBManager = DBManager(requireContext())
         //데이터 리스트 초기화
         dataList.clear()
         GlobalScope.launch(Dispatchers.IO) {
             val db = commentDBManager.readableDatabase
             val cursor: Cursor
-            //board_id가 클릭한 아이템의 id 값인 데이터 보여주기
+            //클릭한 글의 댓글
             cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoard_id';", null)
             while (cursor.moveToNext()) {
                 val board_id = cursor.getLong(cursor.getColumnIndex("board_id"))
