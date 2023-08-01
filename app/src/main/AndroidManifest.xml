@@ -13,9 +13,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/logo"
+        android:icon="@mipmap/ic_app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/logo"
+        android:roundIcon="@mipmap/ic_app_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Noah"
         android:usesCleartextTraffic="true"
@@ -32,13 +32,13 @@
         <activity
             android:name=".login"
             android:exported="false" />
+
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -58,9 +58,11 @@
                 <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao47939324fbf96f947b79074c122ed360" />
+                    android:scheme="kakao349bfd72de9758c2ea3eca3d73454c59" />
             </intent-filter>
-        </activity> <!-- 카카오톡 API를 사용하기 위한 메타데이터 설정 -->
+        </activity>
+
+        <!-- 카카오톡 API를 사용하기 위한 메타데이터 설정-->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="349bfd72de9758c2ea3eca3d73454c59" />

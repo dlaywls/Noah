@@ -1,6 +1,7 @@
 package com.example.noah.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -10,11 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
-import com.example.noah.Borad_DBManager
+import com.example.noah.DBManager
+import retrofit2.Retrofit
+import java.text.FieldPosition
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -23,6 +27,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     lateinit var  myButton:Button
     lateinit var writeButton:Button
     lateinit var sqliteDB:SQLiteDatabase
+
+    private val dataList= mutableListOf<HomeViewModel>()
+    private val adapter = BoardAdapter(dataList)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,8 +39,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         val view=inflater.inflate(R.layout.fragment_home, container, false)
 
         recyclerView=view.findViewById(R.id.main_recycler_view)
-        myButton=view.findViewById(R.id.main_My_button)
-        writeButton=view.findViewById(R.id.main_write_button)
 
         return view
     }
@@ -60,17 +65,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-        val boradDbManager = Borad_DBManager(requireContext())
+        val boradDbManager = DBManager(requireContext())
 
 
 
-        val dataList= mutableListOf<HomeViewModel>()
 
         sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
         cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
         while(cursor.moveToNext()) {
-            val id=cursor.getInt(cursor.getColumnIndex("id"))
+            val id=cursor.getString(cursor.getColumnIndex("id")).toString()
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
             val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
             dataList.add(HomeViewModel(id,title, contents))
@@ -81,17 +85,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         sqliteDB.close()
         boradDbManager.close()
 
+        adapter.setItemClickListener(object: BoardAdapter.OnItemClickListner {
+            override fun onClick(v:View,position: Int){
+                var clickedItem=dataList[position]
+                val itmeTitle=clickedItem.title
+                val itemId=clickedItem.title
+                val itemContents=clickedItem.contents
+                val intent=Intent(context,Comment::class.java)
+                intent.putExtra("itmeTitle",itmeTitle)
+                intent.putExtra("itemId",itemId)
+                intent.putExtra("itemContents",itemContents)
+                startActivity(intent)
 
-        val adapter = BoardAdapter(dataList){selectedItem->
+            }
+        })
 
-            val bundle = Bundle()
-            bundle.putString("itemTitle", selectedItem.title)
-            bundle.putString("itemContents", selectedItem.contents)
-
-            findNavController().navigate(R.id.navigation_comment,bundle)
-
-
-        }
         adapter.notifyDataSetChanged()
 
         recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,true)

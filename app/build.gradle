@@ -39,6 +39,10 @@ dependencies {
 
     // 카카오 로그인 SDK 추가
     implementation group: 'com.kakao.sdk', name: 'auth', version: '1.15.0'
+
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
     //카카오 SDK 모듈 설정
     implementation "com.kakao.sdk:v2-all:2.15.0" // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation "com.kakao.sdk:v2-user:2.15.0" // 카카오 로그인
@@ -48,9 +52,6 @@ dependencies {
     implementation "com.kakao.sdk:v2-navi:2.15.0" // 카카오내비
     implementation "com.kakao.sdk:v2-friend:2.15.0" // 카카오톡 소셜 피커, 리소스 번들 파일 포함
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
