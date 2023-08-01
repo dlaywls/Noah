@@ -20,22 +20,27 @@ class DBManager(
         private const val COLUMN_COMMENTS_ID = "id"
         private const val COLUMN_BOARD_ID = "board_id"
         private const val COLUMN_COMMENTS = "comments"
+        private const val COLUMN_COMMENTS_USER_ID = "comments_user_id"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
         // 테이블 board 생성
         db?.execSQL("CREATE TABLE IF NOT EXISTS $TABLE_BOARD (" +
-                "$COLUMN_ID LONG PRIMARY KEY, " +
-                "$COLUMN_USER_ID LONG,"+
+                "$COLUMN_ID LONG , " +
+                "$COLUMN_USER_ID LONG ,"+
                 "$COLUMN_TITLE TEXT, " +
-                "$COLUMN_CONTENTS TEXT)")
+                "$COLUMN_CONTENTS TEXT," +
+                "PRIMARY KEY ($COLUMN_ID, $COLUMN_USER_ID))")
 
         // 테이블 commentsDB 생성
         db?.execSQL("CREATE TABLE IF NOT EXISTS $TABLE_COMMENTS (" +
                 "$COLUMN_COMMENTS_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "$COLUMN_BOARD_ID LONG, " +
+                "$COLUMN_USER_ID LONG, " +
                 "$COLUMN_COMMENTS TEXT, " +
-                "FOREIGN KEY($COLUMN_BOARD_ID) REFERENCES $TABLE_BOARD($COLUMN_ID))")
+                "$COLUMN_COMMENTS_USER_ID LONG, " +
+                "FOREIGN KEY($COLUMN_BOARD_ID) REFERENCES $TABLE_BOARD($COLUMN_ID),"+
+                "FOREIGN KEY($COLUMN_USER_ID) REFERENCES $TABLE_BOARD($COLUMN_USER_ID))")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
