@@ -19,6 +19,7 @@ import com.kakao.sdk.common.util.Utility
 import android.util.Log
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.noah.ui.home.Comment
 import com.example.noah.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
@@ -54,13 +55,9 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     // 토큰 유효성 체크 성공(필요 시 토큰 갱신됨) -> 홈 화면으로 이동
-                    /*val intent = Intent(this, HomeFragment::class.java)
-                    startActivity(intent)
-                    finish()*/
-
                     val manager:FragmentManager=supportFragmentManager
                     val transaction:FragmentTransaction=manager.beginTransaction()
-                    transaction.replace(R.id.frameLayout, HomeFragment()).commit()
+                    transaction.replace(R.id.frameLayout, DashboardFragment()).commit()
                 }
             }
         } else {
@@ -68,9 +65,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, login::class.java)
             startActivity(intent)
             finish()
-            /*val manager:FragmentManager=supportFragmentManager
-            val transaction:FragmentTransaction=manager.beginTransaction()
-            transaction.replace(R.id.frameLayout, DashboardFragment).commit()*/
         }
 
 
@@ -90,6 +84,24 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun changeFragment(index: Int){
+        when(index){
+            1 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frameLayout, HomeFragment())
+                    .commit()
+            }
+
+            2 -> {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frameLayout, Comment())
+                    .commit()
+            }
+        }
     }
     fun fragmentChange_for_adapter(frag: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.frameLayout, frag).commit()

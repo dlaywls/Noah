@@ -12,11 +12,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noah.R
 import androidx.navigation.fragment.findNavController
 import com.example.noah.DBManager
+import com.example.noah.MainActivity
 import retrofit2.Retrofit
 import java.text.FieldPosition
 
@@ -70,6 +73,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
 
 
+        //데이터 리스트에 커뮤니티 제목, 글 넣음
         sqliteDB=boradDbManager.readableDatabase
         val cursor:Cursor
         cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
@@ -85,17 +89,26 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         sqliteDB.close()
         boradDbManager.close()
 
+        val mActivity=activity as MainActivity
+
+        //글 클릭했을 때 해당 글 데이터 bundle에 넣고 comment프래그먼트로 이동
         adapter.setItemClickListener(object: BoardAdapter.OnItemClickListner {
             override fun onClick(v:View,position: Int){
                 var clickedItem=dataList[position]
                 val itmeTitle=clickedItem.title
                 val itemId=clickedItem.title
                 val itemContents=clickedItem.contents
-                val intent=Intent(context,Comment::class.java)
-                intent.putExtra("itmeTitle",itmeTitle)
-                intent.putExtra("itemId",itemId)
-                intent.putExtra("itemContents",itemContents)
-                startActivity(intent)
+                //val intent=Intent(context,Comment::class.java)
+                var fragment:Fragment=Comment()
+                var bundle:Bundle=Bundle()
+                bundle.putString("itemId",itemId)
+                bundle.putString("itemTitle",itmeTitle)
+                bundle.putString("itemContents",itemContents)
+                //fragment.arguments=bundle
+
+                mActivity.fragmentChange_for_adapter(fragment)
+                Log.d("setItemClickListener","클릭 됨")
+                findNavController().navigate(R.id.navigation_comment,bundle)
 
             }
         })

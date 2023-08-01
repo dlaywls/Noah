@@ -60,6 +60,7 @@ class Comment : Fragment() {
         contentsTextView=view.findViewById(R.id.comments_item_contents_text)
 
 
+        //번들의 데이터 가져옴
         itemBoard_id=arguments?.getString("itemId")
         itemContents=arguments?.getString("itemContents")
         itemTitle=arguments?.getString("itemTitle")
@@ -105,6 +106,7 @@ class Comment : Fragment() {
 
 
 
+        //보내기 버튼 누르면 테이블에 데이터 삽입
         sendButton.setOnClickListener {
             val strComments = commentsEditText.text.toString().trim()
 
