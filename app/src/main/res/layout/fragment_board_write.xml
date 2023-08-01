@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="70dp"
+        android:paddingVertical="30dp"
         android:background="@drawable/rounded_box_white"
         app:cardCornerRadius="2dp">
 
@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@drawable/rounded_box_gray2"
+            android:layout_marginTop="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp">
 
