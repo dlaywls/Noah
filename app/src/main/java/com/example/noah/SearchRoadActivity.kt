@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -37,15 +36,14 @@ class SearchRoadActivity : AppCompatActivity() {
 
     }
 
-    class BridgeInterface {
+    private inner class BridgeInterface {
         @JavascriptInterface
         fun processDATA(data: String) {
             //다음(카카오) 주소 검색 API의 결과 값이 브릿지 통로를 통해 전달
             val intent = Intent()
             intent.putExtra("data", data)
-            Log.d("dataMove", data)
-            bridgeActivity.setResult(Activity.RESULT_OK, intent)
-            bridgeActivity.finish()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         }
     }
 
