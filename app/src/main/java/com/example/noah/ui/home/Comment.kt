@@ -82,6 +82,7 @@ class Comment : Fragment() {
         GlobalScope.launch(Dispatchers.IO) {
             val db = commentDBManager.readableDatabase
             val cursor: Cursor
+            //board_id가 클릭한 아이템의 id 값인 데이터 보여주기
             cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoard_id';", null)
             while (cursor.moveToNext()) {
                 val board_id = cursor.getLong(cursor.getColumnIndex("board_id"))
@@ -113,7 +114,7 @@ class Comment : Fragment() {
 
             sqliteDB=commentDBManager.writableDatabase
             if (strComments.isNotEmpty()) {
-                // 데이터 삽입 (파라미터 바인딩 사용)
+                // 데이터 삽입
                 val sql = "INSERT INTO commentsDB(board_id, comments) VALUES(?, ?);"
                 val args = arrayOf(itemBoard_id, strComments)
                 GlobalScope.launch(Dispatchers.IO) {
