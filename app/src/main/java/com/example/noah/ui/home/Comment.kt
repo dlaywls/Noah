@@ -41,10 +41,11 @@ class Comment : Fragment() {
     lateinit var commentDBManager: DBManager
 
 
-    private var itemBoard_id: Long? =null
+    private var itemBoardId: Long? =null
     private var itemTitle: String? = null
     private var itemContents: String? = null
-    var comments_user_id: Long=0
+    private var itemUserId: Long? = null
+    var commentsUserId: Long=0
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -62,19 +63,20 @@ class Comment : Fragment() {
 
 
         //번들의 데이터 가져옴
-        itemBoard_id=arguments?.getLong("itemId")
+        itemBoardId=arguments?.getLong("itemId")
         itemContents=arguments?.getString("itemContents")
         itemTitle=arguments?.getString("itemTitle")
+        itemUserId=arguments?.getLong("itemUserId")
 
-        Log.d("item", itemBoard_id.toString())
+        Log.d("item", itemBoardId.toString())
         Log.d("item", itemContents.toString())
         Log.d("item", itemTitle.toString())
 
         //회원번호 가져오기
         if (AuthApiClient.instance.hasToken()) {
             UserApiClient.instance.me { user, error ->
-                comments_user_id = user?.id!!
-                Log.d("login_o", comments_user_id.toString())
+                commentsUserId = user?.id!!
+                Log.d("login_o", commentsUserId.toString())
             }
         }
 
@@ -98,8 +100,8 @@ class Comment : Fragment() {
             //EditText에 글이 있으면
             if (strComments.isNotEmpty()) {
                 // 게시판 아이디, 댓글, 데이터 삽입
-                val sql = "INSERT INTO commentsDB(board_id, comments,comments_user_id) VALUES(?, ?,?);"
-                val args = arrayOf(itemBoard_id, strComments,comments_user_id)
+                val sql = "INSERT INTO commentsDB(board_id, comments_user_id,comments,user_id) VALUES(?, ?,?,?);"
+                val args = arrayOf(itemBoardId, commentsUserId,strComments,itemUserId)
                 GlobalScope.launch(Dispatchers.IO) {
                     commentDBManager.writableDatabase.execSQL(sql, args)
                     Log.d("commentDB","comments_user_id")
@@ -132,11 +134,11 @@ class Comment : Fragment() {
             val db = commentDBManager.readableDatabase
             val cursor: Cursor
             //클릭한 글의 댓글
-            cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoard_id';", null)
+            cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoardId';", null)
             while (cursor.moveToNext()) {
-                val board_id = cursor.getLong(cursor.getColumnIndex("board_id"))
+                val boardId = cursor.getLong(cursor.getColumnIndex("board_id"))
                 val comments = cursor.getString(cursor.getColumnIndex("comments")).toString()
-                dataList.add(CommentModel(null, board_id, comments))
+                dataList.add(CommentModel(null, boardId, comments))
                 Log.d("comment: dataList", dataList.toString())
             }
 
