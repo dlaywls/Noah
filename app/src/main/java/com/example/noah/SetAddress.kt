@@ -6,16 +6,19 @@ import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.Button
 
 
 class SetAddress : AppCompatActivity() {
-      lateinit var mEtAddress: EditText
+    lateinit var mEtAddress: EditText
+    lateinit var button_setAddress: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_address)
 
         mEtAddress = findViewById(R.id.et_address)
+        button_setAddress = findViewById(R.id.button_set)
 
         //block touch
         mEtAddress.isFocusable ?: false
@@ -25,6 +28,13 @@ class SetAddress : AppCompatActivity() {
             getSearchResult.launch(intent)
         }
 
+        // 확인 버튼 누르면 마이프로필 화면으로 다시 돌아가기
+        button_setAddress.setOnClickListener() {
+            //마이프로필로 다시 이동
+            val intent = Intent(this, MyProfile::class.java)
+            getSearchResult.launch(intent)
+
+        }
     }
 
     private val getSearchResult = registerForActivityResult<Intent, ActivityResult>(
@@ -35,8 +45,9 @@ class SetAddress : AppCompatActivity() {
             if (result.data != null) {
                 val data = result.data!!.getStringExtra("data")
                 mEtAddress.setText(data)
+
+
             }
         }
     }
-
 }
