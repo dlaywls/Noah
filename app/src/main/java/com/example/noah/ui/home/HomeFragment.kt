@@ -70,11 +70,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         cursor=sqliteDB.rawQuery("SELECT * FROM board;",null)
         dataList.clear()
         while(cursor.moveToNext()) {
-            val id=cursor.getLong(cursor.getColumnIndex("id"))
+            val userId=cursor.getLong(cursor.getColumnIndex("id"))
+            val boardId=cursor.getLong(cursor.getColumnIndex("id"))
             val title = cursor.getString(cursor.getColumnIndex("title")).toString()
             val contents = cursor.getString(cursor.getColumnIndex("contents")).toString()
 
-            dataList.add(HomeViewModel(id,title, contents))
+            dataList.add(HomeViewModel(userId,boardId,title, contents))
             Log.d("dataList", dataList.toString())
         }
 
@@ -92,6 +93,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 val itmeTitle=clickedItem.title
                 val itemId=clickedItem.id
                 val itemContents=clickedItem.contents
+                val itemUserId=clickedItem.user_id
 
                 var fragment:Fragment=Comment()
 
@@ -102,6 +104,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 }
                 bundle.putString("itemTitle",itmeTitle)
                 bundle.putString("itemContents",itemContents)
+                bundle.putLong("itemUserId",itemUserId)
 
                 mActivity.fragmentChange_for_adapter(fragment)
                 Log.d("setItemClickListener","클릭 됨")
