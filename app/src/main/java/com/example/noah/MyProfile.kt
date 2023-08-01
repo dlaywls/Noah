@@ -34,6 +34,9 @@ class MyProfile : AppCompatActivity() {
                 }
                 else {
                     Log.i("logout", "로그아웃 성공. SDK에서 토큰 삭제됨")
+                    val intent = Intent(this, login::class.java)
+                    startActivity(intent)
+                    finish()
                 }
             }
         }
@@ -47,6 +50,9 @@ class MyProfile : AppCompatActivity() {
                 }
                 else {
                     Log.i("unlink", "회원 탈퇴 성공. SDK에서 토큰 삭제 됨")
+                    val intent = Intent(this, login::class.java)
+                    startActivity(intent)
+                    finish()
                 }
             }
 
