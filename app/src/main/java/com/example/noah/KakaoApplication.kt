@@ -11,4 +11,6 @@ internal class KakaoApplication : Application() {
         // Kakao SDK 초기화
         KakaoSdk.init(this, "349bfd72de9758c2ea3eca3d73454c59")
     }
+
+
 }

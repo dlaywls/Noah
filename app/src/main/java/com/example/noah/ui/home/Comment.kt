@@ -1,8 +1,6 @@
 package com.example.noah.ui.home
 
 import android.annotation.SuppressLint
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,17 +13,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.noah.DBManager
 import com.example.noah.R
-import com.example.noah.ui.notifications.NotificationsFragment
-import com.example.noah.ui.notifications.NotifyAdapter
-import com.example.noah.ui.notifications.NotifyModel
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class Comment : Fragment() {
@@ -33,7 +25,7 @@ class Comment : Fragment() {
 
     lateinit var commentsRecyclerView:RecyclerView
     lateinit var commentsAdapter : CommentAdapter
-    lateinit var sqliteDB: SQLiteDatabase
+    val db = Firebase.firestore
     lateinit var sendButton:ImageButton
     lateinit var titleTextView:TextView
     lateinit var contentsTextView:TextView
@@ -42,14 +34,11 @@ class Comment : Fragment() {
     val dataList= mutableListOf<CommentModel>()
 
 
-    lateinit var commentDBManager: DBManager
-    lateinit var notifyComment: NotificationsFragment
 
-
-    private var itemBoardId: Long? =null
+    private var itemBoardId: String? =null
     private var itemTitle: String? = null
     private var itemContents: String? = null
-    private var itemUserId: Long? = null
+    private var itemUserId: String? = null
     var commentsUserId: Long=0
 
     @SuppressLint("MissingInflatedId")
@@ -68,10 +57,10 @@ class Comment : Fragment() {
 
 
         //번들의 데이터 가져옴
-        itemBoardId=arguments?.getLong("itemId")
+        itemBoardId=arguments?.getString("itemId")
         itemContents=arguments?.getString("itemContents")
         itemTitle=arguments?.getString("itemTitle")
-        itemUserId=arguments?.getLong("itemUserId")
+        itemUserId=arguments?.getString("itemUserId")
 
         Log.d("item", itemBoardId.toString())
         Log.d("item", itemContents.toString())
@@ -85,7 +74,7 @@ class Comment : Fragment() {
             }
         }
 
-        // 가져온 데이터를 텍스트뷰에 설정해서 댓글 화면에서 보여줌
+        // 글 타이틀과 내용을 댓글 화면에서 보여줌
         titleTextView.text = itemTitle
         contentsTextView.text = itemContents
 
@@ -97,35 +86,41 @@ class Comment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //보내기 버튼 누르면 테이블에 데이터 삽입
+        //보내기 버튼 누르면 데이터 삽입
         sendButton.setOnClickListener {
             //editText에서 댓글 가져오기
             val strComments = commentsEditText.text.toString().trim()
 
-            sqliteDB=commentDBManager.writableDatabase
             //EditText에 글이 있으면
             if (strComments.isNotEmpty()) {
                 // 게시판 아이디, 댓글, 데이터 삽입
-                val sql = "INSERT INTO commentsDB(board_id, comments_user_id,comments,user_id) VALUES(?, ?,?,?);"
-                val args = arrayOf(itemBoardId, commentsUserId,strComments,itemUserId)
-                GlobalScope.launch(Dispatchers.IO) {
-                    commentDBManager.writableDatabase.execSQL(sql, args)
+                val board_id=db.collection("boards").document().getId()
 
-                    var bundle:Bundle=Bundle()
-                    bundle.putString("comments",strComments)
-                    Log.d("strComments의 값 : ", strComments)
+                val comment = hashMapOf(
+                    "comments_id" to board_id,
+                    "board_id" to itemBoardId,
+                    "board_user_id" to itemUserId,
+                    "comments" to strComments,
+                    "comments_user_id" to commentsUserId
+                )
 
-                   //notifyComment.getComment(strComments)
-                    Log.d("commentDB","comments_user_id")
-                }
+                db.collection("comments")
+                    .document()
+                    .set(comment)
+                    .addOnSuccessListener { documentReference ->
+                        Toast.makeText(context, "등록", Toast.LENGTH_SHORT).show()
+                        //Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(context, "등록 실패", Toast.LENGTH_SHORT).show()
+                        //Log.w(TAG, "Error adding document", e)
+                    }
+
+                val bundle=Bundle()
+                bundle.putString("comments",strComments)
+                Log.d("strComments의 값 : ", strComments)
                 // 삽입 후 댓글 목록을 갱신
                 loadDataFromDB()
-
-               //val cursor:Cursor
-               //cursor=sqliteDB.rawQuery("SELECT * FROM commentDB WHERE itemUserId;",null)
-               //val comment1=cursor.getString(cursor.getColumnIndex("commets")).toString()
-
-               //notifyComment.getComment(comment1)
 
             //EditText에 글이 없을 때
             } else {
@@ -137,7 +132,7 @@ class Comment : Fragment() {
         // 댓글 목록을 로드하고 어댑터 설정
         loadDataFromDB()
         commentsAdapter = CommentAdapter(dataList)
-        commentsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        commentsRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         commentsRecyclerView.adapter = commentsAdapter
 
     }
@@ -146,32 +141,25 @@ class Comment : Fragment() {
     //댓글 목록 로드
     private fun loadDataFromDB() {
 
-        commentDBManager = DBManager(requireContext())
         //데이터 리스트 초기화
         dataList.clear()
-        GlobalScope.launch(Dispatchers.IO) {
-            val db = commentDBManager.readableDatabase
-            val cursor: Cursor
-            //클릭한 글의 댓글
-            cursor = db.rawQuery("SELECT * FROM commentsDB WHERE board_id='$itemBoardId';", null)
-            while (cursor.moveToNext()) {
-                val boardId = cursor.getLong(cursor.getColumnIndex("board_id"))
-                val comments = cursor.getString(cursor.getColumnIndex("comments")).toString()
-                dataList.add(CommentModel(null, boardId, comments))
-                Log.d("comment: dataList", dataList.toString())
-            }
 
-            cursor.close()
-            db.close()
-            commentDBManager.close()
 
-            // 어댑터에 데이터 변경을 알리는 코드
-            withContext(Dispatchers.Main) {
+        db.collection("comments")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if(document.getData().get("board_id").toString()==itemBoardId){
+                        val commentsId =document.getData().get("comments_id").toString()
+                        val boardId=document.getData().get("board_id").toString()
+                        val comments=document.getData().get("comments").toString()
+                        dataList.add(CommentModel(commentsId,boardId,comments))
+                        Log.d("dataList", dataList.toString())
+                    }
+
+                }
                 commentsAdapter.notifyDataSetChanged()
             }
+
         }
     }
-
-
-
-}

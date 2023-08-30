@@ -2,7 +2,6 @@ package com.example.noah.ui.home
 
 
 import android.annotation.SuppressLint
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,8 +12,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.example.noah.DBManager
 import com.example.noah.R
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.user.UserApiClient
 
@@ -24,10 +24,10 @@ class BoardWrite() : Fragment() {
     lateinit var writeTitleEdit: EditText
     lateinit var writeContentsEdit: EditText
     lateinit var registButton: Button
-    lateinit var sqlitedb:SQLiteDatabase
+    val db = Firebase.firestore
 
     var user_id: Long = 0 //회원 번호
-    var board_id:Long=0 //글 id
+    var board_id:String =" "//글 id
 
 
     @SuppressLint("MissingInflatedId")
@@ -49,29 +49,36 @@ class BoardWrite() : Fragment() {
                 Log.d("login_o", user_id.toString())
             }
         }
-        val boardDbManager = DBManager(requireContext())
+
         //등록 버튼 클릭
         registButton.setOnClickListener {
 
-            //board_id값 랜덤으로 지정
-            val random = (1..1000).random()
-            board_id= random.toLong()
+
+            board_id=db.collection("boards").document().getId()
 
             //에디트 텍스트의 Title, contents 받기
             val strTitle = writeTitleEdit.text.toString().trim()
             val strContents = writeContentsEdit.text.toString().trim()
 
+            val board = hashMapOf(
+                "board_id" to board_id,
+                "user_id" to user_id,
+                "title" to strTitle,
+                "contents" to strContents
+            )
 
-            sqlitedb=boardDbManager.writableDatabase
-            if (strTitle.isNotEmpty() && strContents.isNotEmpty()) {
-                // 글 id, 회원번호, 글 제목, 글 내용 데이터 삽입
-                sqlitedb.execSQL("INSERT INTO board VALUES('"+board_id+"','"+user_id+"','"+strTitle+"','"+strContents+"');")
-                Toast.makeText(context, "등록 완료", Toast.LENGTH_SHORT).show()
+            db.collection("boards")
+                .document()
+                .set(board)
+                .addOnSuccessListener { documentReference ->
+                    Toast.makeText(context, "업로드 성공", Toast.LENGTH_SHORT).show()
+                    //Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(context, "업로드 실패", Toast.LENGTH_SHORT).show()
+                    //Log.w(TAG, "Error adding document", e)
+                }
 
-            } else {
-                Toast.makeText(context, "글을 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-            sqlitedb.close()
 
             //커뮤니티 메인 화면으로 전환
             findNavController().navigate(R.id.navigation_home)
